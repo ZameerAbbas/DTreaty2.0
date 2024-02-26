@@ -89,8 +89,6 @@ export default function CameraScreen() {
 
     return <View style={styles.container} />;
 
-    return <View />;
-
   }
 
   if (!permission.granted) {
