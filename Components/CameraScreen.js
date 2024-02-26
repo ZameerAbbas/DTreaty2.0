@@ -122,7 +122,7 @@ export default function CameraScreen() {
         <Ionicons name="ios-camera" size={68} color="white" />
       </TouchableOpacity>
       <Text className="text-lg font-bold mt-4">AI can make mistakes, so be careful.</Text>
-      <Camera className="w-[50%] mt-4" type={type}>
+      <Camera className="w-[100%] h-[100vh] mt-4" type={type}>
         <View className="items-center">
           <TouchableOpacity className="bg-black bg-opacity-50 p-2 rounded-full" onPress={toggleCameraType}>
             <Text className="text-white">Flip Camera</Text>
