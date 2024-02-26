@@ -75,10 +75,8 @@
 import React, { useRef } from "react";
 import { Camera, CameraType } from "expo-camera";
 import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
-
 
 export default function CameraScreen() {
   const [type, setType] = useState(CameraType.back);
@@ -86,119 +84,51 @@ export default function CameraScreen() {
 
   if (!permission) {
     // Camera permissions are still loading
-
-    return <View style={styles.container} />;
-
+    return <View className="flex-1 justify-center items-center" />;
   }
 
   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
-      <View style={styles.container}>
-
-        <View style={styles.cameraContainer}>
+      <View className="flex-1 justify-center items-center">
+        <View className="flex-1 items-center">
           <Text>Lets Diagnose</Text>
-          <Camera style={styles.camera} type={type} />
+          <Camera className="w-full" type={type} />
         </View>
-        <TouchableOpacity
-          style={styles.permissionButton}
-          onPress={requestPermission}
-        >
+        <TouchableOpacity className="bg-green-500 p-4 rounded-full" onPress={requestPermission}>
           <Ionicons name="ios-camera" size={32} color="white" />
         </TouchableOpacity>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Text className="text-center">We need your permission to show the camera</Text>
+        {/* <Button onPress={requestPermission} title="grant permission" /> */}
       </View>
     );
   }
 
   function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.cameraContainer}>
-      <Text style ={styles.headingText}>Lets Diagnose</Text>
-        <Camera style={styles.camera} type={type}>
-          {/* <TouchableOpacity style={styles.flipButton} onPress={toggleCameraType}>
+    <View className="w-[100%] h-[100vh] flex-1 justify-center items-center">
+      <View className="flex-1 items-center">
+        <Text className="mt-8 mb-4 text-2xl font-bold">Lets Diagnose</Text>
+        <Camera className="w-[50%] mb-4" type={type}>
+          {/* <TouchableOpacity className="absolute top-4 right-4 bg-black bg-opacity-50 p-2 rounded-full" onPress={toggleCameraType}>
             <Ionicons name="ios-reverse-camera" size={32} color="white" />
           </TouchableOpacity> */}
         </Camera>
       </View>
-      <TouchableOpacity style={styles.captureButton} onPress={toggleCameraType}>
+      <TouchableOpacity className="bg-green-500 p-4 rounded-full" onPress={toggleCameraType}>
         <Ionicons name="ios-camera" size={68} color="white" />
       </TouchableOpacity>
-      <Text style={styles.precautiontext}>
-        AI can make mistakes, so be careful.
-      </Text>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
+      <Text className="text-lg font-bold mt-4">AI can make mistakes, so be careful.</Text>
+      <Camera className="w-[50%] mt-4" type={type}>
+        <View className="items-center">
+          <TouchableOpacity className="bg-black bg-opacity-50 p-2 rounded-full" onPress={toggleCameraType}>
+            <Text className="text-white">Flip Camera</Text>
           </TouchableOpacity>
         </View>
       </Camera>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cameraContainer: {
-    flex: 1,
-    width: "100%",
-    marginTop: 23,
-  },
-  camera: {
-    flex: 0.7,
-  },
-  flipButton: {
-    position: "absolute",
-    top: 20,
-    right: 20,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    padding: 10,
-    borderRadius: 20,
-  },
-  permissionButton: {
-    position: "absolute",
-    bottom: 20,
-    width: 64,
-    height: 64,
-    backgroundColor: "#4CAF50",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 32,
-  },
-  captureButton: {
-    position: "absolute",
-    bottom: 80,
-    width: 90,
-    height: 90,
-    backgroundColor: "#4CAF50",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 46,
-  },
-  precautiontext: {
-    fontSize: 17,
-    fontWeight: "bold",
-    bottom: 23,
-  },
-  headingText:{
-    marginTop: 32,
-    marginBottom: 24,
-    fontSize: 26,
-    textAlign: 'center',
-    fontWeight: 'bold'
-
-  }
-});
