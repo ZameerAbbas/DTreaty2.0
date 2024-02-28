@@ -39,6 +39,20 @@ export default function ImageClassifier() {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
+    // Load the image and set it as the state
+    const loadAndProcessImage = async () => {
+      try {
+        const loadimage = require('./applescab.jpg'); // Replace with the path to your image
+        setImage(loadimage);
+        setReady(true);
+      } catch (error) {
+        console.error('Error loading image:', error);
+      }
+    };
+    loadAndProcessImage();
+  }, []);
+
+  useEffect(() => {
     // Load the model and initialize TensorFlow.js
     async function initializeModel() {
       try {
@@ -47,8 +61,8 @@ export default function ImageClassifier() {
         const modelWeights = require("../assets/models/group1-shard1of1.bin");
         const modelClasses = require("../assets/models/classes.json");
         const imageSize = 224;
-        console.log(modelJSON);
-        console.log(modelWeights);
+        // console.log(modelJSON);
+        // console.log(modelWeights);
         const model = await tf.loadGraphModel(
           bundleResourceIO(modelJSON, modelWeights)
         );
@@ -61,17 +75,30 @@ export default function ImageClassifier() {
     }
     initializeModel();
   }, []);
+
   useEffect(() => {
     if (model) {
       classifyImages();
     }
   }, [model]);
 
+  /**
+   * The `classifyImages` function processes an image, makes predictions using a model, and sets the
+   * predicted class label based on the highest probability.
+   * @returns The `classifyImages` function is returning either an error message if the image is not
+   * defined or the predicted class name after processing and predicting the image.
+   */
+  /**
+   * The `classifyImages` function processes an image, makes predictions using a model, and sets the
+   * predicted class label based on the highest probability.
+   * @returns The `classifyImages` function is returning either an error message if the image is not
+   * defined or the predicted class name after processing and predicting the image.
+   */
   const classifyImages = async () => {
     // Process the image and pass it to the model for prediction
     try {
-      const imageArray = await preprocessImage(uri);
-      console.log(imageArray);
+      const imageArray = await preprocessImage(image);
+      console.log("image array is L"+imageArray);
       const predictions = await model.predict(tf.tensor([imageArray])).data();
       setPredictions(predictions);
       const predicted_class = tf.argMax(predictions).dataSync()[0];
@@ -81,35 +108,48 @@ export default function ImageClassifier() {
       console.error("Error processing or predicting:", error);
     }
   };
+  
 
   // Function to process the image
   const preprocessImage = async () => {
     // Manipulate image for resizing and format conversion
-    // const imagepath = require('./applescab.jpg'); // Replace with the path to your image
-    // const uri = imagepath.uri;
-    const manipulatedImage = await manipulateAsync(
-      (uri = require("./applescab.jpg")),
-      [{ resize: { width: 224, height: 224 } }],
-      { compress: 1, format: "jpeg" }
-    );
-
-    // Use a different variable name for the image URI
-    const { uri: manipulatedUri } = manipulatedImage;
-
-    const imgB64 = await FileSystem.readAsStringAsync(manipulatedUri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-    const imgBuffer = tf.util.encodeString(imgB64, "base64").buffer;
-    const imageTensor = tf.node.decodeImage(new Uint8Array(imgBuffer), 3);
-
-    // Normalize the image from [0, 255] to [0, 1]
-    const normalized = imageTensor.toFloat().div(tf.scalar(255));
-
-    // Reshape the image tensor to match model input shape
-    const preProcessedImage = normalized.reshape([1, 224, 224, 3]);
-
-    return preProcessedImage;
+    if (!image) {
+      console.error('Image is undefined.');
+      return null;
+    }
+  
+    // Ensure that image has the 'uri' or 'localUri' property
+    if (!image.uri) {
+      console.error('Image URI is missing.');
+      return null;
+    }
+    try {
+      // Manipulate image for resizing and format conversion
+      const manipulatedImage = await manipulateAsync(
+        image.uri,
+        [{ resize: { width: 224, height: 224 } }],
+        { compress: 1, format: "jpeg" }
+      );
+  
+      // Use the 'uri' property of the manipulated image
+      const { uri: manipulatedUri } = manipulatedImage;
+  
+      // Decode the manipulated image to a tensor
+      const imageTensor = tf.node.decodeImage(new Uint8Array(manipulatedUri), 3);
+  
+      // Normalize the image tensor from [0, 255] to [0, 1]
+      const normalized = imageTensor.toFloat().div(tf.scalar(255));
+  
+      // Reshape the image tensor to match model input shape
+      const reshapedImage = normalized.reshape([-1, 224, 224, 3]);
+  
+      return reshapedImage;
+    } catch (error) {
+      console.error('Error processing image:', error);
+      return null;
+    }
   };
+  
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>

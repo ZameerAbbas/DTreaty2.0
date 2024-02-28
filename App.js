@@ -4,7 +4,7 @@ import * as tf from '@tensorflow/tfjs'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./Components/HomeScreen";
 import CameraScreen from "./Components/CameraScreen";
-// import ImageClassifier from "./Components/classify";
+import ImageClassifier from "./Components/classify";
 
 
 
@@ -25,11 +25,11 @@ export default function App() {
           component={CameraScreen}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="ClassificationScreen"
           component={ImageClassifier}
           options={{ headerShown: false }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
