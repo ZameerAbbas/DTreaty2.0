@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, Button } from "react-native";
 import * as tf from "@tensorflow/tfjs";
+// import * as tfnode from "@tensorflow/tfjs-node";
 import { manipulateAsync } from "expo-image-manipulator";
 import * as ImagePicker from 'expo-image-picker';
 import { Asset } from "expo-asset";
@@ -65,9 +66,17 @@ export default function ImageClassifier() {
         [{ resize: { width: 224, height: 224 } }],
         { compress: 1, format: "jpeg" }
       );
+        console.log(typeof(manipulatedImage));
+      if(!manipulatedImage){
+        throw new error("Image data is Null")
+      }
+      const base64Data = manipulatedImage.split(",")[1]; // Extract the Base64-encoded data part
+
+      // Decode the Base64-encoded image data to an ArrayBuffer
+      const arrayBuffer = decode(base64Data);
       // const  { uri : pickedImage} = manipulatedImage;
       // Decode the manipulated image to a tensor
-      const imageTensor = tf.node.decodeImage(new Uint8Array(manipulatedImage), 3);
+      const imageTensor = tf.node.decodeImage(arrayBuffer);
   
       // Normalize the image tensor from [0, 255] to [0, 1]
       const normalized = imageTensor.toFloat().div(tf.scalar(255));
