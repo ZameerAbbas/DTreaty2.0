@@ -90,7 +90,7 @@ export default function CameraScreen() {
   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
-      <View className="flex-1 justify-center items-center">
+      <View className="">
         <View className="flex-1 items-center">
           <Text>Lets Diagnose</Text>
           <Camera className="w-full" type={type} />

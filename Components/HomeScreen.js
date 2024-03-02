@@ -8,37 +8,47 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import * as tf from '@tensorflow/tfjs';
-import { fetch } from '@tensorflow/tfjs-react-native';
-
-
-
-
+import * as tf from "@tensorflow/tfjs";
+import { fetch } from "@tensorflow/tfjs-react-native";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
 
   const navigateToCameraScreen = () => {
-
-    navigation.navigate("CameraScreen"); // Use the name of the screen from the stack navigator
+    navigation.navigate("CameraScreen");
   };
 
-  // // Assuming your model file is named 'model.h5'
-  // const model = tf.loadLayersModel('assets/DTreaty.h5');
-
-  // console.log(model)
+  const navigateToClassificationScreen = () => {
+    navigation.navigate("ClassificationScreen");
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>DTreaty</Text>
-      <Text style={styles.subheading}>Empowering Farmers with AI</Text>
-      <Text style={styles.description}>
-        Detect crop diseases with our advanced computer vision techniques and
-        receive treatment suggestions
-      </Text>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text>Header</Text>
+      </View>
+      {/* slider */}
+
+
+
+
+      {/* Components */}
       <TouchableOpacity style={styles.button} onPress={navigateToCameraScreen}>
-        <Text style={styles.buttonText}>Get Started</Text>
+        <Text style={styles.buttonText}>Camera</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={navigateToClassificationScreen}
+      >
+        <Text style={styles.buttonText}>Doctor app</Text>
+      </TouchableOpacity>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Footer</Text>
+      </View>
     </View>
   );
 };
@@ -51,9 +61,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
+  },
+  header: {
+    backgroundColor: "#D9D9D9",
+    height: 50,
   },
   heading: {
     fontSize: 28,
@@ -81,6 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 6,
     elevation: 3,
+    marginTop: 10,
   },
   buttonText: {
     fontSize: 18,
@@ -88,6 +100,9 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  footer:{
+    
+  }
 });
 
 export default HomeScreen;
