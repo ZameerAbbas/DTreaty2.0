@@ -61,19 +61,32 @@ const HomeScreen = () => {
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
       title: "First Item",
+      subtitle: "Second ItemSecond ItemSecond Item",
+      buttonTxt: "Shop now",
     },
     {
       id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
       title: "Second Item",
+      subtitle: "Second ItemSecond ItemSecond Item",
+      buttonTxt: "Shop now",
     },
     {
       id: "58694a0f-3da1-471f-bd96-145571e29d72",
       title: "Third Item",
+      subtitle: "Second ItemSecond ItemSecond Item",
+      buttonTxt: "Shop now",
     },
   ];
-  const Item = ({ title }) => (
+  const Item = ({ title, subtitle, buttonTxt }) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
+      <Text style={styles.subtilte}>{subtitle}</Text>
+      <TouchableOpacity
+        style={styles.buttonSlider}
+        onPress={navigateToClassificationScreen}
+      >
+        <Text style={styles.buttonTextslider}>{buttonTxt}</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -111,7 +124,13 @@ const HomeScreen = () => {
             <FlatList
               data={DATA}
               horizontal
-              renderItem={({ item }) => <Item title={item.title} />}
+              renderItem={({ item }) => (
+                <Item
+                  title={item.title}
+                  subtitle={item.subtitle}
+                  buttonTxt={item.buttonTxt}
+                />
+              )}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -302,21 +321,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   MainSlider: {
-    color: "#ffff",
     width: "100%",
-    borderColor: "red",
-    borderWidth: 3,
     textAlign: "center",
-    flex: 1,
+    marginTop: 25,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: "#E6E6E6",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
+    height: 150,
+    borderRadius: 10,
+    width: 200,
   },
   title: {
     fontSize: 15,
+  },
+  subtilte: {
+    fontSize: 12,
+  },
+  buttonSlider: {
+    backgroundColor: "#4DB129",
+    width: 90,
+    borderRadius: 10,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 6,
+    marginVertical: 4,
+  },
+  buttonTextslider: {
+    color: "black",
   },
   main: {
     flex: 1,
