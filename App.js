@@ -5,8 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./Components/HomeScreen";
 import CameraScreen from "./Components/CameraScreen";
 import ImageClassifier from "./Components/classify";
-
-
+import ComingSoon from "./Components/ComingSoon"
 
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +27,11 @@ export default function App() {
         <Stack.Screen
           name="ClassificationScreen"
           component={ImageClassifier}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ComingSoon"
+          component={ComingSoon}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
