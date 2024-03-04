@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const ComingSoon = () => {
+const FramAreaCal = () => {
   return (
     <View>
-      <Text>ComingSoon</Text>
+      <Text>FramAreaCal</Text>
     </View>
   )
 }
 
-export default ComingSoon
+export default FramAreaCal

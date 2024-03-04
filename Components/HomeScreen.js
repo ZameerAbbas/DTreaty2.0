@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  Image
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as tf from "@tensorflow/tfjs";
@@ -35,12 +36,27 @@ const HomeScreen = () => {
     navigation.navigate("ComingSoon");
   };
 
+  const navigateToWeatherScreen = ()=>{
+    navigation.navigate('Weather')
+  }
+  const navigateToFramAreaCal = ()=>{
+    navigation.navigate('FramAreaCal')
+  }
+  const navigateToShop = ()=>{
+    navigation.navigate('Shop')
+  }
+  const navigateToNearMe = ()=>{
+    navigation.navigate('NearMe')
+  }
+  const navigateToLaibaray = ()=>{
+    navigation.navigate('Laibaray')
+  }
   const [greeting, setGreeting] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
-    }, 60000); // Update every minute
+    }, 60000);
 
     return () => clearInterval(interval);
   }, []);
@@ -49,44 +65,52 @@ const HomeScreen = () => {
     const currentHour = currentTime.getHours();
 
     if (currentHour >= 5 && currentHour < 12) {
-      setGreeting("Good morning");
+      setGreeting("Good Morning");
     } else if (currentHour >= 12 && currentHour < 18) {
-      setGreeting("Good afternoon");
+      setGreeting("Good Afternoon");
     } else {
-      setGreeting("Good evening");
+      setGreeting("Good Evening");
     }
   }, [currentTime]);
 
   const DATA = [
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
+      title: "Shop Now",
       subtitle: "Second ItemSecond ItemSecond Item",
       buttonTxt: "Shop now",
+      img: require("../assets/images/Group 12.png"),
     },
     {
       id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
+      title: "Near ME",
       subtitle: "Second ItemSecond ItemSecond Item",
-      buttonTxt: "Shop now",
+      buttonTxt: "Near Me",
+      img: require("../assets/images/Group 12.png"),
     },
     {
       id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
+      title: "Doctor",
       subtitle: "Second ItemSecond ItemSecond Item",
-      buttonTxt: "Shop now",
+      buttonTxt: "Doctor",
+      img: require("../assets/images/Group 12.png"),
     },
   ];
-  const Item = ({ title, subtitle, buttonTxt }) => (
+  const Item = ({ title, subtitle, buttonTxt,img }) => (
     <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subtilte}>{subtitle}</Text>
-      <TouchableOpacity
-        style={styles.buttonSlider}
-        onPress={navigateToClassificationScreen}
-      >
-        <Text style={styles.buttonTextslider}>{buttonTxt}</Text>
-      </TouchableOpacity>
+      <View>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.subtilte}>{subtitle}</Text>
+        <TouchableOpacity
+          style={styles.buttonSlider}
+          onPress={navigateToClassificationScreen}
+        >
+          <Text style={styles.buttonTextslider}>{buttonTxt}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.sliderImg}>
+        <Image source={img} />
+      </View>
     </View>
   );
 
@@ -115,7 +139,7 @@ const HomeScreen = () => {
       </View>
 
       <ImageBackground
-        source={require("../assets/images/Bg-main.jpg")} // Replace with the actual path to your image
+        source={require("../assets/images/Bg-main.jpg")}
         style={styles.main}
       >
         <View style={styles.overlay}>
@@ -129,6 +153,7 @@ const HomeScreen = () => {
                   title={item.title}
                   subtitle={item.subtitle}
                   buttonTxt={item.buttonTxt}
+                  img={item.img}
                 />
               )}
               keyExtractor={(item) => item.id}
@@ -139,7 +164,7 @@ const HomeScreen = () => {
             <View style={styles.MainNavicationGrid}>
               <TouchableOpacity
                 style={styles.button}
-                onPress={navigateToCameraScreen}
+                onPress={navigateToShop}
               >
                 <View style={styles.ButtonFlex}>
                   <MaterialCommunityIcons
@@ -163,7 +188,7 @@ const HomeScreen = () => {
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={navigateToClassificationScreen}
+                onPress={navigateToNearMe}
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="shop" size={24} color="#FFFFFF" />
@@ -172,7 +197,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                // onPress={navigateToCameraScreen}
+                onPress={navigateToWeatherScreen}
               >
                 <View style={styles.ButtonFlex}>
                   <MaterialCommunityIcons
@@ -185,7 +210,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                // onPress={navigateToCameraScreen}
+                onPress={navigateToFramAreaCal}
               >
                 <View style={styles.ButtonFlex}>
                   <AntDesign name="calculator" size={24} color="#FFFFFF" />
@@ -195,16 +220,16 @@ const HomeScreen = () => {
 
               <TouchableOpacity
                 style={styles.button}
-                // onPress={navigateToComingSoon}
+                onPress={navigateToLaibaray}
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="stopwatch" size={24} color="#FFFFFF" />
-                  <Text style={styles.buttonText}>Coming Soon</Text>
+                  <Text style={styles.buttonText}>Laibaray</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                // onPress={navigateToComingSoon}
+                onPress={navigateToComingSoon}
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="stopwatch" size={24} color="#FFFFFF" />
@@ -332,7 +357,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     height: 150,
     borderRadius: 10,
-    width: 200,
+    width: 250,
+    flexDirection:"row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
     fontSize: 15,
@@ -352,6 +380,11 @@ const styles = StyleSheet.create({
   },
   buttonTextslider: {
     color: "black",
+  },
+  sliderImg:{
+   width:100,
+   borderWidth:2,
+   borderColor:"red"
   },
   main: {
     flex: 1,
@@ -378,7 +411,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginTop: 10,
     width: "30%",
-    height: "50%",
+    height: "60%",
     textAlign: "center",
   },
   ButtonFlex: {

@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const ComingSoon = () => {
+const Weather = () => {
   return (
     <View>
-      <Text>ComingSoon</Text>
+      <Text>Weather</Text>
     </View>
   )
 }
 
-export default ComingSoon
+export default Weather

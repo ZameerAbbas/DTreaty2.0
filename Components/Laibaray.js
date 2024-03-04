@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const ComingSoon = () => {
+const Laibaray = () => {
   return (
     <View>
-      <Text>ComingSoon</Text>
+      <Text>Laibaray</Text>
     </View>
   )
 }
 
-export default ComingSoon
+export default Laibaray

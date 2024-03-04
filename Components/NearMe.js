@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const ComingSoon = () => {
+const NearMe = () => {
   return (
     <View>
-      <Text>ComingSoon</Text>
+      <Text>NearMe</Text>
     </View>
   )
 }
 
-export default ComingSoon
+export default NearMe
