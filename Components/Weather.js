@@ -1,9 +1,37 @@
 
-import React from 'react';
-import { View, Text, Image, StyleSheet, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, ActivityIndicator, StyleSheet, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const WeatherForecast = () => {
+
+  const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getWeatherData = async () => {
+      try {
+        const apiKey = "432a8658a6991c2c948f1125de99c13d";
+        const response = await fetch(
+          `https://api.openweathermap.org/data/3.0/onecall?lat=35.92&lon=74.30&appid=${apiKey}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Weather data not available");
+        }
+
+        const data = await response.json();
+        setWeatherData(data);
+        console.log(data)
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching weather data:", error.message);
+        setLoading(false);
+      }
+    };
+
+    getWeatherData();
+  }, []);
 
   const DayForecast = ({ day, temperature, description }) => {
 
@@ -26,10 +54,9 @@ const WeatherForecast = () => {
     };
     return (
       <View style={styles.dayForecastContainer}>
-        <Image source={getImageSource(description)} style={styles.forecastimage}/>
+        <Image source={getImageSource(description)} style={styles.forecastimage} />
         <Text style={styles.day}>{day}</Text>
         <Text style={styles.temperature}>{temperature}</Text>
-        {/* <Text style={styles.description}>{description}</Text> */}
       </View>
     );
   };
@@ -46,16 +73,23 @@ const WeatherForecast = () => {
       {/* Current Weather */}
       <Text style={styles.currentWeatherText}>Weather</Text>
       <View style={styles.currentweather}>
-      <View style={styles.searchContainer}>
-      <Icon name="search" size={20} color="#aaa" style={styles.searchIcon} />
-      <TextInput
-        style={styles.input}
-        placeholder="Search for a City"
-      />
-    </View>
-        <Text style={styles.weathertext}>Gilgit, Pakistan</Text>
-        <Image style={styles.weatherimage} source={require('../assets/images/sun.png')} />
-        <Text style={styles.weathertext}>25°C</Text>
+        <View style={styles.searchContainer}>
+          <Icon name="search" size={20} color="#aaa" style={styles.searchIcon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Search for a City"
+          />
+        </View>
+        {
+          loading ?
+            (<ActivityIndicator animating={true} size='large' />) : (
+              <View style={styles.currentweather}>
+                <Text style={styles.weathertext}>Gilgit, Pakistan</Text>
+                <Image style={styles.weatherimage} source={require('../assets/images/sun.png')} />
+                <Text style={styles.weathertext}>{Math.ceil(weatherData.current.temp - 273.15)}°C</Text>
+              </View>
+            )
+        }
       </View>
 
 
@@ -144,9 +178,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
   },
-  forecastimage:{
-    height:40,
-    width:40
+  forecastimage: {
+    height: 40,
+    width: 40
   },
   day: {
     fontSize: 18,
