@@ -11,6 +11,7 @@ import FramAreaCal from "./Components/FramAreaCal"
 import Laibaray from "./Components/Laibaray"
 import Shop from "./Components/Shop"
 import NearMe from "./Components/NearMe"
+import Otp from "./Services";
 
 const Stack = createNativeStackNavigator();
 
