@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ActivityIndicator, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Image, ActivityIndicator, StyleSheet, TextInput, Touchable, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const WeatherForecast = () => {
 
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const getWeatherData = async () => {
@@ -32,7 +33,11 @@ const WeatherForecast = () => {
 
     getWeatherData();
   }, []);
-
+  
+  const handleSearchChange = (text) => {
+    setSearchText(text);
+    console.log(searchText);
+  };
   const DayForecast = ({ day, temperature, description }) => {
 
     const getImageSource = (description) => {
@@ -61,7 +66,7 @@ const WeatherForecast = () => {
     );
   };
   const forecastData = [
-    { day: 'Mon', temperature: '25°-19°', description: 'sunny' },
+    { day: 'Mon', temperature: '', description: 'sunny' },
     { day: 'Tue', temperature: '23°-07°', description: 'snowy' },
     { day: 'Wed', temperature: '-01°-01°', description: 'cloudy' },
     { day: 'Thu', temperature: '11°-07°', description: 'rainy' },
@@ -78,7 +83,12 @@ const WeatherForecast = () => {
           <TextInput
             style={styles.input}
             placeholder="Search for a City"
+            onChangeText={handleSearchChange}
+            value={searchText}
           />
+          <TouchableOpacity onPress={handleSearchChange}>
+          <Icon name="check" size={20} color="#aaa" style={styles.OkIcon} />
+          </TouchableOpacity>
         </View>
         {
           loading ?
@@ -126,6 +136,9 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     marginRight: 10,
+  },
+  OkIcon: {
+    right: 3,
   },
   input: {
     flex: 1,
