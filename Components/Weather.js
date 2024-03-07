@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Footer from "./Footer";
+import { ScrollView } from "react-native-gesture-handler";
 
 const WeatherForecast = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -129,6 +131,7 @@ const WeatherForecast = () => {
           />
         ))}
       </View>
+      <Footer />
     </View>
   );
 };

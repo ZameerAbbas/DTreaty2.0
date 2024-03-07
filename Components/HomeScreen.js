@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
-  Image
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as tf from "@tensorflow/tfjs";
@@ -21,6 +21,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import Footer from "./Footer";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -36,21 +37,21 @@ const HomeScreen = () => {
     navigation.navigate("ComingSoon");
   };
 
-  const navigateToWeatherScreen = ()=>{
-    navigation.navigate('Weather')
-  }
-  const navigateToFramAreaCal = ()=>{
-    navigation.navigate('FramAreaCal')
-  }
-  const navigateToShop = ()=>{
-    navigation.navigate('Shop')
-  }
-  const navigateToNearMe = ()=>{
-    navigation.navigate('NearMe')
-  }
-  const navigateToLaibaray = ()=>{
-    navigation.navigate('Laibaray')
-  }
+  const navigateToWeatherScreen = () => {
+    navigation.navigate("Weather");
+  };
+  const navigateToFramAreaCal = () => {
+    navigation.navigate("FramAreaCal");
+  };
+  const navigateToShop = () => {
+    navigation.navigate("Shop");
+  };
+  const navigateToNearMe = () => {
+    navigation.navigate("NearMe");
+  };
+  const navigateToLaibaray = () => {
+    navigation.navigate("Laibaray");
+  };
   const [greeting, setGreeting] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
   useEffect(() => {
@@ -79,40 +80,43 @@ const HomeScreen = () => {
       title: "Shop Now",
       subtitle: "Second ItemSecond ItemSecond Item",
       buttonTxt: "Shop now",
-      img: require("../assets/images/Group 12.png"),
+      img: require("../assets/images/Group12.png"),
     },
     {
       id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
       title: "Near ME",
       subtitle: "Second ItemSecond ItemSecond Item",
       buttonTxt: "Near Me",
-      img: require("../assets/images/Group 12.png"),
+      img: require("../assets/images/Group12.png"),
     },
     {
       id: "58694a0f-3da1-471f-bd96-145571e29d72",
       title: "Doctor",
       subtitle: "Second ItemSecond ItemSecond Item",
       buttonTxt: "Doctor",
-      img: require("../assets/images/Group 12.png"),
+      img: require("../assets/images/Group12.png"),
     },
   ];
-  const Item = ({ title, subtitle, buttonTxt,img }) => (
-    <View style={styles.item}>
-      <View className="w-[70%]">
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subtilte}>{subtitle}</Text>
-        <TouchableOpacity
-          style={styles.buttonSlider}
-          onPress={navigateToClassificationScreen}
-        >
-          <Text style={styles.buttonTextslider}>{buttonTxt}</Text>
-        </TouchableOpacity>
+  const Item = ({ item }) => {
+    console.log("sssss", item.item?.title);
+    return (
+      <View style={styles.item}>
+        <View className="w-[70%]">
+          <Text style={styles.title}>{item.item?.title}</Text>
+          <Text style={styles.subtilte}>{item.item?.subtitle}</Text>
+          <TouchableOpacity
+            style={styles.buttonSlider}
+            onPress={navigateToClassificationScreen}
+          >
+            <Text style={styles.buttonTextslider}>{item.item?.buttonTxt}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.sliderImg}>
+          <Image className="w-full" source={item.item?.img}  resizeMode="contain"/>
+        </View>
       </View>
-      <View style={styles.sliderImg}>
-        <Image className="w-full border border-red-700"  source={img} />
-      </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -148,24 +152,14 @@ const HomeScreen = () => {
             <FlatList
               data={DATA}
               horizontal
-              renderItem={({ item }) => (
-                <Item
-                  title={item.title}
-                  subtitle={item.subtitle}
-                  buttonTxt={item.buttonTxt}
-                  img={item.img}
-                />
-              )}
+              renderItem={(item) => <Item item={item} />}
               keyExtractor={(item) => item.id}
             />
           </View>
           {/* Components */}
           <View style={styles.GridConatiner}>
             <View style={styles.MainNavicationGrid}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={navigateToShop}
-              >
+              <TouchableOpacity style={styles.button} onPress={navigateToShop}>
                 <View style={styles.ButtonFlex}>
                   <MaterialCommunityIcons
                     name="shopping-outline"
@@ -256,56 +250,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-
-          {/* ====Footer=== */}
-          <View style={styles.footer}>
-            <View style={styles.footerCotent}>
-              <View>
-                <TouchableOpacity
-                  style={styles.buttonBaar}
-                  onPress={navigateToShop}
-                >
-                  <MaterialCommunityIcons
-                    name="shopping-outline"
-                    size={24}
-                    color="#343434"
-                  />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={styles.buttonBaar}
-                  onPress={navigateToClassificationScreen}
-                >
-                  <Ionicons name="scan" size={24} color="#343434" />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={styles.buttonBaar}
-                  onPress={navigateToComingSoon}
-                >
-                  <AntDesign name="home" size={24} color="#343434" />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={styles.buttonBaar}
-                  onPress={navigateToNearMe}
-                >
-                  <Entypo name="shop" size={24} color="#343434" />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity
-                  style={styles.buttonBaar}
-                  onPress={navigateToComingSoon}
-                >
-                  <Feather name="more-horizontal" size={24} color="#343434" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
+          <Footer />
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -355,15 +300,17 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    height: 150,
+    height: 180,
     borderRadius: 10,
-    width: 250,
-    flexDirection:"row",
+    width: 300,
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   title: {
     fontSize: 15,
+    // color:'#000'
+    
   },
   subtilte: {
     fontSize: 12,
@@ -381,11 +328,10 @@ const styles = StyleSheet.create({
   buttonTextslider: {
     color: "black",
   },
-  sliderImg:{
-   width:100,
-   borderWidth:2,
-   height:100,
-   borderColor:"red"
+  sliderImg: {
+    width: 100,
+
+    height: 100,
   },
   main: {
     flex: 1,
