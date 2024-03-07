@@ -98,7 +98,7 @@ const HomeScreen = () => {
   ];
   const Item = ({ title, subtitle, buttonTxt,img }) => (
     <View style={styles.item}>
-      <View>
+      <View className="w-[70%]">
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtilte}>{subtitle}</Text>
         <TouchableOpacity
@@ -109,7 +109,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.sliderImg}>
-        <Image source={img} />
+        <Image className="w-full border border-red-700"  source={img} />
       </View>
     </View>
   );
@@ -263,7 +263,7 @@ const HomeScreen = () => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonBaar}
-                  onPress={navigateToComingSoon}
+                  onPress={navigateToShop}
                 >
                   <MaterialCommunityIcons
                     name="shopping-outline"
@@ -275,7 +275,7 @@ const HomeScreen = () => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonBaar}
-                  onPress={navigateToComingSoon}
+                  onPress={navigateToClassificationScreen}
                 >
                   <Ionicons name="scan" size={24} color="#343434" />
                 </TouchableOpacity>
@@ -291,7 +291,7 @@ const HomeScreen = () => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonBaar}
-                  onPress={navigateToComingSoon}
+                  onPress={navigateToNearMe}
                 >
                   <Entypo name="shop" size={24} color="#343434" />
                 </TouchableOpacity>
@@ -384,6 +384,7 @@ const styles = StyleSheet.create({
   sliderImg:{
    width:100,
    borderWidth:2,
+   height:100,
    borderColor:"red"
   },
   main: {

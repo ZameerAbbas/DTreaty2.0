@@ -31,37 +31,37 @@ export default function App() {
         <Stack.Screen
           name="ClassificationScreen"
           component={ImageClassifier}
-          options={{ headerShown: false }}
+          options={"Crop Doctor"}
         />
         <Stack.Screen
           name="ComingSoon"
           component={ComingSoon}
-          options={{ headerShown: false }}
+          options={"ComingSoon"}
         />
         <Stack.Screen
           name="Weather"
           component={Weather}
-          options={{ headerShown: false }}
+          options={"Weather app"}
         />
         <Stack.Screen
           name="FramAreaCal"
           component={FramAreaCal}
-          options={{ headerShown: false }}
+          options={"FramAreaCal"}
         />
         <Stack.Screen
           name="Laibaray"
           component={Laibaray}
-          options={{ headerShown: false }}
+          options={"Laibaray"}
         />
         <Stack.Screen
           name="Shop"
           component={Shop}
-          options={{ headerShown: false }}
+          options={"Shop"}
         />
         <Stack.Screen
           name="NearMe"
           component={NearMe}
-          options={{ headerShown: false }}
+          options={"NearMe"}
         />
       </Stack.Navigator>
     </NavigationContainer>
