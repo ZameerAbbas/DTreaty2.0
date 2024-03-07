@@ -1,13 +1,20 @@
-
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, ActivityIndicator, StyleSheet, TextInput, Touchable, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+  TextInput,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const WeatherForecast = () => {
-
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     const getWeatherData = async () => {
@@ -23,7 +30,7 @@ const WeatherForecast = () => {
 
         const data = await response.json();
         setWeatherData(data);
-        console.log(data)
+        // console.log(data)
         setLoading(false);
       } catch (error) {
         console.error("Error fetching weather data:", error.message);
@@ -33,25 +40,24 @@ const WeatherForecast = () => {
 
     getWeatherData();
   }, []);
-  
+
   const handleSearchChange = (text) => {
     setSearchText(text);
     console.log(searchText);
   };
   const DayForecast = ({ day, temperature, description }) => {
-
     const getImageSource = (description) => {
       switch (description) {
-        case 'sunny':
-          return require('../assets/images/sun.png');
-        case 'snowy':
-          return require('../assets/images/cloud.png');
-        case 'rainy':
-          return require('../assets/images/heavy-rain.png');
-        case 'cloudy':
-          return require('../assets/images/snow.png');
-        case 'heavy-rain':
-          return require('../assets/images/raincloud.png');
+        case "sunny":
+          return require("../assets/images/sun.png");
+        case "snowy":
+          return require("../assets/images/cloud.png");
+        case "rainy":
+          return require("../assets/images/heavy-rain.png");
+        case "cloudy":
+          return require("../assets/images/snow.png");
+        case "heavy-rain":
+          return require("../assets/images/raincloud.png");
         // Add more cases for other descriptions if needed
         default:
           return null;
@@ -59,27 +65,34 @@ const WeatherForecast = () => {
     };
     return (
       <View style={styles.dayForecastContainer}>
-        <Image source={getImageSource(description)} style={styles.forecastimage} />
+        <Image
+          source={getImageSource(description)}
+          style={styles.forecastimage}
+        />
         <Text style={styles.day}>{day}</Text>
         <Text style={styles.temperature}>{temperature}</Text>
       </View>
     );
   };
   const forecastData = [
-    { day: 'Mon', temperature: '', description: 'sunny' },
-    { day: 'Tue', temperature: '23°-07°', description: 'snowy' },
-    { day: 'Wed', temperature: '-01°-01°', description: 'cloudy' },
-    { day: 'Thu', temperature: '11°-07°', description: 'rainy' },
-    { day: 'Fri', temperature: '15°-13°', description: 'heavy-rain' },
+    { day: "Mon", temperature: "23°-07°", description: "sunny" },
+    { day: "Tue", temperature: "23°-07°", description: "snowy" },
+    { day: "Wed", temperature: "-01°-01°", description: "cloudy" },
+    { day: "Thu", temperature: "11°-07°", description: "rainy" },
+    { day: "Fri", temperature: "15°-13°", description: "heavy-rain" },
   ];
 
   return (
     <View style={styles.container}>
-      {/* Current Weather */}
       <Text style={styles.currentWeatherText}>Weather</Text>
       <View style={styles.currentweather}>
         <View style={styles.searchContainer}>
-          <Icon name="search" size={20} color="#aaa" style={styles.searchIcon} />
+          <Icon
+            name="search"
+            size={20}
+            color="#aaa"
+            style={styles.searchIcon}
+          />
           <TextInput
             style={styles.input}
             placeholder="Search for a City"
@@ -87,23 +100,24 @@ const WeatherForecast = () => {
             value={searchText}
           />
           <TouchableOpacity onPress={handleSearchChange}>
-          <Icon name="check" size={20} color="#aaa" style={styles.OkIcon} />
+            <Icon name="check" size={20} color="#aaa" style={styles.OkIcon} />
           </TouchableOpacity>
         </View>
-        {
-          loading ?
-            (<ActivityIndicator animating={true} size='large' />) : (
-              <View style={styles.currentweather}>
-                <Text style={styles.weathertext}>Gilgit, Pakistan</Text>
-                <Image style={styles.weatherimage} source={require('../assets/images/sun.png')} />
-                <Text style={styles.weathertext}>{Math.ceil(weatherData.current.temp - 273.15)}°C</Text>
-              </View>
-            )
-        }
+        {loading ? (
+          <ActivityIndicator animating={true} size="large" />
+        ) : (
+          <View style={styles.currentweather}>
+            <Text style={styles.weathertext}>Gilgit, Pakistan</Text>
+            <Image
+              style={styles.weatherimage}
+              source={require("../assets/images/sun.png")}
+            />
+            <Text style={styles.weathertext}>
+              {Math.ceil(weatherData.current.temp - 273.15)}°C
+            </Text>
+          </View>
+        )}
       </View>
-
-
-      {/* Next Five Days Forecast */}
       <View style={styles.forecastContainer}>
         <Text style={styles.forecastTitle}>5-day forecast</Text>
         {forecastData.map((data, index) => (
@@ -124,12 +138,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: 70,
-    backgroundColor: '#fffff',
+    backgroundColor: "#fffff",
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#cce7ed',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#cce7ed",
     borderRadius: 18,
     paddingHorizontal: 10,
     marginBottom: 20,
@@ -151,60 +165,50 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 15,
   },
-  // input: {
-  //   width: '100%',
-  //   height: 50,
-  //   borderWidth: 1,
-  //   borderColor: '#264653', // Dark green
-  //   borderRadius: 10,
-  //   paddingHorizontal: 10,
-  //   marginBottom: 20,
-  // },
   weathertext: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 15,
   },
 
   currentWeatherText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   currentweather: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   forecastTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   dayForecastContainer: {
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   forecastimage: {
     height: 40,
-    width: 40
+    width: 40,
   },
   day: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   temperature: {
     fontSize: 16,
   },
   description: {
     fontSize: 16,
-    color: '#666666',
+    color: "#666666",
   },
 });
 
