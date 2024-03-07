@@ -70,7 +70,7 @@ export default function ImageClassifier() {
       if(!manipulatedImage){
         throw new error("Image data is Null")
       }
-      const base64Data = manipulatedImage.split(",")[1]; // Extract the Base64-encoded data part
+      const base64Data = manipulatedImage.split(",")[1];
 
       // Decode the Base64-encoded image data to an ArrayBuffer
       const arrayBuffer = decode(base64Data);
@@ -96,7 +96,7 @@ export default function ImageClassifier() {
     // Load the model and initialize TensorFlow.js
     async function initializeModel() {
       try {
-        await tf.ready(); // Ensure TensorFlow.js is ready
+        await tf.ready();
         const modelJSON = require("../assets/models/model.json");
         const modelWeights = require("../assets/models/group1-shard1of1.bin");
         const modelClasses = require("../assets/models/classes.json");
@@ -162,121 +162,3 @@ export default function ImageClassifier() {
     </View>
   );
 }
-
-
-// import React, { useState, useEffect, useRef } from "react";
-// import { View, Text, TouchableOpacity } from "react-native"; // Update import
-// import { Camera } from "expo-camera";
-// import * as tf from "@tensorflow/tfjs";
-// import { manipulateAsync } from "expo-image-manipulator";
-// import { bundleResourceIO } from "@tensorflow/tfjs-react-native";
-
-// class JSONHandler {
-//   constructor(jsonString) {
-//     this.jsonString = jsonString;
-//   }
-
-//   async load() {
-//     const modelJSON = JSON.parse(this.jsonString);
-//     const modelArtifacts = {
-//       modelTopology: modelJSON.modelTopology,
-//       format: modelJSON.format,
-//       generatedBy: modelJSON.generatedBy,
-//       convertedBy: modelJSON.convertedBy,
-//     };
-//     if (modelJSON.trainingConfig != null) {
-//       modelArtifacts.trainingConfig = modelJSON.trainingConfig;
-//     }
-//     if (modelJSON.userDefinedMetadata != null) {
-//       modelArtifacts.userDefinedMetadata = modelJSON.userDefinedMetadata;
-//     }
-//     return modelArtifacts;
-//   }
-// }
-
-// export default function ImageClassifier() {
-//   const [model, setModel] = useState(null);
-//   const [predictions, setPredictions] = useState([]);
-//   const [label, setLabel] = useState("");
-//   const [isLoading, setIsLoading] = useState(true);
-//   const cameraRef = useRef(null);
-
-//   useEffect(() => {
-//     async function initializeModel() {
-//       try {
-//         await tf.ready();
-//         const modelJSON = require("../assets/models/model.json");
-//         const modelWeights = require("../assets/models/group1-shard1of1.bin");
-//         const model = await tf.loadGraphModel(
-//           bundleResourceIO(modelJSON, modelWeights)
-//         );
-//         model.predict(tf.zeros([1, 224, 224, 3])); // Corrected the input shape
-//         setModel(model);
-//         setIsLoading(false);
-//       } catch (error) {
-//         console.error("Error loading the model:", error);
-//       }
-//     }
-//     initializeModel();
-//   }, []);
-
-//   useEffect(() => {
-//     if (model) {
-//       classifyImages();
-//     }
-//   }, [model]);
-
-//   const classifyImages = async () => {
-//     try {
-//       if (cameraRef.current) {
-//         const photo = await cameraRef.current.takePictureAsync();
-//         const imageArray = await preprocessImage(photo.uri);
-//         const predictions = await model.predict(tf.tensor([imageArray])).data();
-//         setPredictions(predictions);
-//         const predictedClassIndex = tf.argMax(predictions).dataSync()[0];
-//         const predictedClassName = class_names[predictedClassIndex];
-//         setLabel(predictedClassName);
-//       }
-//     } catch (error) {
-//       console.error("Error processing or predicting:", error);
-//     }
-//   };
-
-//   const preprocessImage = async (uri) => {
-//     try {
-//       const manipulatedImage = await manipulateAsync(
-//         uri,
-//         [{ resize: { width: 224, height: 224 } }],
-//         { compress: 1, format: "jpeg" }
-//       );
-//       const { uri: resizedUri } = manipulatedImage;
-//       const imageTensor = tf.node.decodeImage(new Uint8Array(manipulatedImage), 3);
-//       const normalized = imageTensor.toFloat().div(tf.scalar(255));
-//       const reshapedImage = normalized.reshape([1, 224, 224, 3]); // Corrected the shape
-//       return reshapedImage;
-//     } catch (error) {
-//       console.error('Error processing image:', error);
-//       return null;
-//     }
-//   };
-
-//   return (
-//     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-//       {isLoading ? (
-//         <Text>Loading Model...</Text>
-//       ) : (
-//         <Text>Model Loaded Successfully!</Text>
-//       )}
-//       <Camera
-//         style={{ width: 300, height: 300 }}
-//         type={Camera.Constants.Type.back}
-//         ref={cameraRef}
-//       />
-//       <TouchableOpacity onPress={classifyImages}>
-//         <Text>Capture Image</Text>
-//       </TouchableOpacity>
-//       <Text>{label}</Text> {/* Wrapped label in a Text component */}
-//     </View>
-//   );
-// }
-
