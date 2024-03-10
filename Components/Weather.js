@@ -12,6 +12,9 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import Footer from "./Footer";
 import { ScrollView } from "react-native-gesture-handler";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WeatherForecast = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -86,7 +89,6 @@ const WeatherForecast = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.currentWeatherText}>Weather</Text>
       <View style={styles.currentweather}>
         <View style={styles.searchContainer}>
           <Icon
@@ -131,7 +133,6 @@ const WeatherForecast = () => {
           />
         ))}
       </View>
-      <Footer />
     </View>
   );
 };
