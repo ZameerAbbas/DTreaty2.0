@@ -21,7 +21,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-// import Footer from "./Footer";
+import Footer from "./Footer";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -98,7 +98,7 @@ const HomeScreen = () => {
     },
   ];
   const Item = ({ item }) => {
-    console.log("sssss", item.item?.title);
+    // console.log("sssss", item.item?.title);
     return (
       <View style={styles.item}>
         <View className="w-[70%]">
@@ -251,6 +251,7 @@ const HomeScreen = () => {
             </View>
           </View>
           {/* <Footer /> */}
+          <Footer/>
         </View>
       </ImageBackground>
     </SafeAreaView>
