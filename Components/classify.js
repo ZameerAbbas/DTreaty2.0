@@ -167,6 +167,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, Dimensions, ImageBackground, StatusBar } from 'react-native';
 import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons from expo/vector-icons
 import axios from 'axios';
 
 const { height, width } = Dimensions.get('window');
@@ -174,13 +175,13 @@ const { height, width } = Dimensions.get('window');
 const ImageClassifier = () => {
   const [result, setResult] = useState('');
   const [label, setLabel] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(require('./applescab.jpg'));
 
   useEffect(() => {
     StatusBar.setBarStyle('light-content');
   }, []);
 
-  const getPredication = async params => {
+  const getPrediction = async params => {
     try {
       const formData = new FormData();
       formData.append('file', params);
@@ -200,12 +201,6 @@ const ImageClassifier = () => {
     }
   };
 
-  const clearOutput = () => {
-    setResult('');
-    setLabel('');
-    setImage(null);
-  };
-
   const handleCamera = async () => {
     let result = await launchCameraAsync({
       mediaTypes: 'Images',
@@ -218,7 +213,7 @@ const ImageClassifier = () => {
       setImage(result.uri);
       setResult('');
       setLabel('Predicting...');
-      getPredication(result);
+      getPrediction(result);
     }
   };
 
@@ -234,7 +229,7 @@ const ImageClassifier = () => {
       setImage(result.uri);
       setResult('');
       setLabel('Predicting...');
-      getPredication(result);
+      getPrediction(result);
     }
   };
 
@@ -248,14 +243,11 @@ const ImageClassifier = () => {
         <Text style={styles.resultText}>Confidence: {parseFloat(result).toFixed(2) + '%'}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleCamera}>
-          <Text style={styles.buttonText}>Take Photo</Text>
+        <TouchableOpacity style={styles.iconButton} onPress={handleCamera}>
+          <Ionicons name="camera" size={24} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleImageLibrary}>
-          <Text style={styles.buttonText}>Choose from Library</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={clearOutput}>
-          <Text style={styles.buttonText}>Clear Output</Text>
+        <TouchableOpacity style={styles.iconButton} onPress={handleImageLibrary}>
+          <Ionicons name="images" size={24} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -266,7 +258,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   backgroundImage: {
@@ -278,9 +270,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
-    marginBottom: 20,
+    marginTop: 40,
   },
   image: {
     width: width - 40,
@@ -303,20 +295,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
+    marginBottom: 20,
   },
-  button: {
+  iconButton: {
     backgroundColor: '#007bff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    padding: 10,
     borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 
 export default ImageClassifier;
+
 
 
