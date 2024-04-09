@@ -164,6 +164,11 @@
 // }
 
 
+
+// The New Code
+
+
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, Dimensions, ImageBackground, StatusBar } from 'react-native';
 import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
@@ -186,7 +191,7 @@ const ImageClassifier = () => {
       const formData = new FormData();
       formData.append('file', params);
 
-      const response = await axios.post('http://localhost:8088/predict', formData);
+      const response = await axios.post('https://cnn-model-api-deployment-ac2b40fcf26d.herokuapp.com/predict', formData);
       const { data } = response;
 
       if (data && data.class) {
@@ -210,7 +215,7 @@ const ImageClassifier = () => {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      // setImage(result.uri);
       setResult('');
       setLabel('Predicting...');
       getPrediction(result);
@@ -226,7 +231,7 @@ const ImageClassifier = () => {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      // setImage(result.uri);
       setResult('');
       setLabel('Predicting...');
       getPrediction(result);
@@ -237,7 +242,7 @@ const ImageClassifier = () => {
     <View style={styles.container}>
       <ImageBackground source={{ uri: 'background' }} style={styles.backgroundImage} />
       <Text style={styles.title}>Potato Disease Prediction App</Text>
-      {image && <Image source={{ uri: image }} style={styles.image} />}
+      {/* {image && <Image source={{ uri: image }} style={styles.image} />} */}
       <View style={styles.resultContainer}>
         <Text style={styles.resultText}>Label: {label}</Text>
         <Text style={styles.resultText}>Confidence: {parseFloat(result).toFixed(2) + '%'}</Text>
@@ -299,7 +304,7 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     backgroundColor: '#007bff',
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
   },
 });
