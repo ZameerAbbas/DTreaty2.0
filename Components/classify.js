@@ -190,10 +190,12 @@ const ImageClassifier = () => {
     try {
       const formData = new FormData();
       formData.append('file', params);
-
-      const response = await axios.post('https://cnn-model-api-deployment-ac2b40fcf26d.herokuapp.com/predict', formData);
+  
+      const response = await axios.post('https://cnn-model-api-deployment-ac2b40fcf26d.herokuapp.com/predict', formData, { timeout: 10000 });
       const { data } = response;
-
+  
+      console.log("data", data);
+  
       if (data && data.class) {
         setLabel(data.class);
         setResult(data.confidence);
@@ -201,10 +203,23 @@ const ImageClassifier = () => {
         setLabel('Failed to predict');
       }
     } catch (error) {
-      setLabel('Failed to predict');
-      console.error('Error predicting:', error);
+      if (error.response) {
+        // Server responded with a non-2xx status code
+        console.error('Server responded with error:', error.response.data);
+        setLabel('Failed to predict: Server Error');
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        setLabel('Failed to predict: No Response');
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error('Error setting up the request:', error.message);
+        setLabel('Failed to predict: Request Error');
+      }
     }
   };
+  
+  
 
   const handleCamera = async () => {
     let result = await launchCameraAsync({
