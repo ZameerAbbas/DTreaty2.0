@@ -344,39 +344,6 @@ const ImageClassifier = () => {
     StatusBar.setBarStyle('light-content');
   }, []);
 
-  const getPrediction = async (params) => {
-    try {
-      const formData = new FormData();
-      formData.append('file', params);
-
-      const response = await axios.post(process.env.URL, formData, { timeout: 10000 });
-      const { data } = response;
-
-      console.log("data", data);
-
-      if (data && data.class) {
-        setLabel(data.class);
-        setResult(data.confidence);
-      } else {
-        setLabel('Failed to predict');
-      }
-    } catch (error) {
-      if (error.response) {
-        // Server responded with a non-2xx status code
-        console.error('Server responded with error:', error.response.data);
-        setLabel('Failed to predict: Server Error');
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('No response received:', error.request);
-        setLabel('Failed to predict: No Response');
-      } else {
-        // Something happened in setting up the request that triggered an error
-        console.error('Error setting up the request:', error.message);
-        setLabel('Failed to predict: Request Error');
-      }
-    }
-  };
-
   const handleCamera = async () => {
     let result = await launchCameraAsync({
       mediaTypes: 'Images',
@@ -384,14 +351,14 @@ const ImageClassifier = () => {
       aspect: [1, 1],
       quality: 1,
     });
-
+  
     if (!result.cancelled) {
       setResult('');
       setLabel('Predicting...');
-      getPrediction(result.uri);
+      getPrediction(result);
     }
   };
-
+  
   const handleImageLibrary = async () => {
     let result = await launchImageLibraryAsync({
       mediaTypes: 'Images',
@@ -399,13 +366,44 @@ const ImageClassifier = () => {
       aspect: [1, 1],
       quality: 1,
     });
-
+  
     if (!result.cancelled) {
       setResult('');
       setLabel('Predicting...');
-      getPrediction(result.uri);
+      getPrediction(result);
     }
   };
+  
+  const getPrediction = async (imageData) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', {
+        uri: imageData.uri,
+        type: 'image/jpeg', // Adjust the type if necessary
+        name: 'image.jpg', // Adjust the name if necessary
+      });
+  
+      const response = await axios.post('https://cnn-model-api-deployment-ac2b40fcf26d.herokuapp.com/predict', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        timeout: 10000,
+      });
+  
+      const { data } = response;
+      console.log("data", data);
+  
+      if (data && data.class) {
+        setLabel(data.class);
+        setResult(data.confidence);
+      } else {
+        setLabel('Failed to predict');
+      }
+    } catch (error) {
+      // Handle errors
+    }
+  };
+  
 
   return (
     <View style={styles.container}>
@@ -479,5 +477,267 @@ const styles = StyleSheet.create({
 });
 
 export default ImageClassifier;
+
+
+// New Coodededeeedededed
+
+
+
+
+
+// import React, {useState} from 'react';
+// import {
+//   SafeAreaView,
+//   Image,
+//   StatusBar,
+//   StyleSheet,
+//   Text,
+//   Platform,
+//   Dimensions,
+//   useColorScheme,
+//   View,
+//   TouchableOpacity,
+//   ImageBackground,
+// } from 'react-native';
+// import Config from 'react-native-config';
+// import {Colors} from 'react-native/Libraries/NewAppScreen';
+// import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
+// import { Ionicons } from '@expo/vector-icons';
+// import axios from 'axios';
+
+// axios.interceptors.request.use(
+//   async config => {
+//     let request = config;
+//     request.headers = {
+//       'Content-Type': 'application/json',
+//       Accept: 'application/json',
+//     };
+//     request.url = configureUrl(config.url);
+//     return request;
+//   },
+//   error => error,
+// );
+
+// export const {height, width} = Dimensions.get('window');
+
+// export const configureUrl = url => {
+//   let authUrl = url;
+//   if (url && url[url.length - 1] === '/') {
+//     authUrl = url.substring(0, url.length - 1);
+//   }
+//   return authUrl;
+// };
+
+// const options = {
+//   mediaType: 'photo',
+//   quality: 1,
+//   width: 256,
+//   height: 256,
+//   includeBase64: true,
+// };
+
+// const ImageClassifier = () => {
+//   const [result, setResult] = useState('');
+//   const [label, setLabel] = useState('');
+//   const isDarkMode = useColorScheme() === 'dark';
+//   const [image, setImage] = useState('');
+//   const backgroundStyle = {
+//     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+//   };
+
+//   const getPredication = async params => {
+//     return new Promise((resolve, reject) => {
+//       var bodyFormData = new FormData();
+//       bodyFormData.append('file', params);
+//       const url = "Config.URL_API + '/predict'"; // Replace with
+//       return axios
+//         .post(url, bodyFormData)
+//         .then(response => {
+//           resolve(response);
+//         })
+//         .catch(error => {
+//           setLabel('Failed to predicting.');
+//           reject('err', error);
+//         });
+//     });
+//   };
+
+
+//   const openCamera = async () => {
+//     launchCameraAsync(options, async response => {
+//       if (response.didCancel) {
+//         console.log('User cancelled image picker');
+//       } else if (response.error) {
+//         console.log('ImagePicker Error: ', response.error);
+//       } else if (response.customButton) {
+//         console.log('User tapped custom button: ', response.customButton);
+//       } else {
+//         const uri = response?.assets[0]?.uri;
+//         const path = Platform.OS !== 'ios' ? uri : 'file://' + uri;
+//         getResult(path, response);
+//       }
+//     });
+//   };
+
+//   const clearOutput = () => {
+//     setResult('');
+//     setImage('');
+//   };
+
+//   const getResult = async (path, response) => {
+//     setImage(path);
+//     setLabel('Predicting...');
+//     setResult('');
+//     const params = {
+//       uri: path,
+//       name: response.assets[0].fileName,
+//       type: response.assets[0].type,
+//     };
+//     const res = await getPredication(params);
+//     if (res?.data?.class) {
+//       setLabel(res.data.class);
+//       setResult(res.data.confidence);
+//     } else {
+//       setLabel('Failed to predict');
+//     }
+//   };
+
+//   const openLibrary = async () => {
+//     launchImageLibraryAsync(options, async response => {
+//       if (response.didCancel) {
+//         console.log('User cancelled image picker');
+//       } else if (response.error) {
+//         console.log('ImagePicker Error: ', response.error);
+//       } else if (response.customButton) {
+//         console.log('User tapped custom button: ', response.customButton);
+//       } else {
+//         const uri = response.assets[0].uri;
+//         const path = Platform.OS !== 'ios' ? uri : 'file://' + uri;
+//         getResult(path, response);
+//       }
+//     });
+//   };
+
+//   return (
+//     <View style={[backgroundStyle, styles.outer]}>
+//       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+//       <ImageBackground
+//         blurRadius={10}
+//         source={{uri: 'background'}}
+//         style={{height: height, width: width}}
+//       />
+//       <Text style={styles.title}>{'Potato Disease \nPrediction App'}</Text>
+//       <TouchableOpacity onPress={clearOutput} style={styles.clearStyle}>
+//         <Image source={{uri: 'clean'}} style={styles.clearImage} />
+//       </TouchableOpacity>
+//       {(image?.length && (
+//         <Image source={{uri: image}} style={styles.imageStyle} />
+//       )) ||
+//         null}
+//       {(result && label && (
+//         <View style={styles.mainOuter}>
+//           <Text style={[styles.space, styles.labelText]}>
+//             {'Label: \n'}
+//             <Text style={styles.resultText}>{label}</Text>
+//           </Text>
+//           <Text style={[styles.space, styles.labelText]}>
+//             {'Confidence: \n'}
+//             <Text style={styles.resultText}>
+//               {parseFloat(result).toFixed(2) + '%'}
+//             </Text>
+//           </Text>
+//         </View>
+//       )) ||
+//         (image && <Text style={styles.emptyText}>{label}</Text>) || (
+//           <Text style={styles.emptyText}>
+//             Use below buttons to select a picture of a potato plant leaf.
+//           </Text>
+//         )}
+//       <View style={styles.btn}>
+//         <TouchableOpacity
+//           activeOpacity={0.9}
+//           onPress={() => manageCamera('Camera')}
+//           style={styles.btnStyle}>
+//           <Image source={{uri: 'camera'}} style={styles.imageIcon} />
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           activeOpacity={0.9}
+//           onPress={() => manageCamera('Photo')}
+//           style={styles.btnStyle}>
+//           <Image source={{uri: 'gallery'}} style={styles.imageIcon} />
+//         </TouchableOpacity>
+//       </View>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   title: {
+//     alignSelf: 'center',
+//     position: 'absolute',
+//     top: 10,
+//     fontSize: 30,
+//     color: '#FFF',
+//   },
+//   clearImage: {height: 40, width: 40, tintColor: '#FFF'},
+//   mainOuter: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//     position: 'absolute',
+//     top: height / 1.6,
+//     alignSelf: 'center',
+//   },
+//   outer: {
+//     flex: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   btn: {
+//     position: 'absolute',
+//     bottom: 40,
+//     justifyContent: 'space-between',
+//     flexDirection: 'row',
+//   },
+//   btnStyle: {
+//     backgroundColor: '#FFF',
+//     opacity: 0.8,
+//     marginHorizontal: 30,
+//     padding: 20,
+//     borderRadius: 20,
+//   },
+//   imageStyle: {
+//     marginBottom: 50,
+//     width: width / 1.5,
+//     height: width / 1.5,
+//     borderRadius: 20,
+//     position: 'absolute',
+//     borderWidth: 0.3,
+//     borderColor: '#FFF',
+//     top: height / 4.5,
+//   },
+//   clearStyle: {
+//     position: 'absolute',
+//     top: 100,
+//     right: 30,
+//     tintColor: '#FFF',
+//     zIndex: 10,
+//   },
+//   space: {marginVertical: 10, marginHorizontal: 10},
+//   labelText: {color: '#FFF', fontSize: 20,},
+//   resultText: {fontSize: 32,},
+//   imageIcon: {height: 40, width: 40, tintColor: '#000'},
+//   emptyText: {
+//     position: 'absolute',
+//     top: height / 1.6,
+//     alignSelf: 'center',
+//     color: '#FFF',
+//     fontSize: 20,
+//     maxWidth: '70%',
+//   },
+// });
+
+// export default ImageClassifier;
+
+
 
 
