@@ -352,7 +352,7 @@ const ImageClassifier = () => {
       quality: 1,
     });
   
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setResult('');
       setLabel('Predicting...');
       getPrediction(result);
@@ -367,7 +367,7 @@ const ImageClassifier = () => {
       quality: 1,
     });
   
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setResult('');
       setLabel('Predicting...');
       getPrediction(result);
@@ -379,8 +379,8 @@ const ImageClassifier = () => {
       const formData = new FormData();
       formData.append('file', {
         uri: imageData.uri,
-        type: 'image/jpeg', // Adjust the type if necessary
-        name: 'image.jpg', // Adjust the name if necessary
+        type: 'image/jpeg', // Specify the correct MIME type of the image
+        name: 'diseasePic.jpeg', // Provide a name for the file
       });
   
       const response = await axios.post('https://cnn-model-api-deployment-ac2b40fcf26d.herokuapp.com/predict', formData, {
@@ -391,7 +391,7 @@ const ImageClassifier = () => {
       });
   
       const { data } = response;
-      console.log("data", data);
+      console.log("data", {data});
   
       if (data && data.class) {
         setLabel(data.class);
@@ -401,6 +401,16 @@ const ImageClassifier = () => {
       }
     } catch (error) {
       // Handle errors
+      if (error.response) {
+        // Server responded with a status code outside of 2xx
+        console.error('Server responded with error:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Other errors
+        console.error('Error:', error.message);
+      }
     }
   };
   
