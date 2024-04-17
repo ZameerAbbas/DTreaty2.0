@@ -352,7 +352,6 @@ const ImageClassifier = () => {
       quality: 1,
     });
 
-    console.log(typeof(result))
   
     if (!result.canceled) {
       setResult('');
@@ -382,15 +381,15 @@ const ImageClassifier = () => {
         console.error('Invalid image data:', result);
         return;
       }
-      // const uriParts = result.uri.split('/');
-      // const fileName = uriParts[uriParts.length - 1];
+      const uriParts = result.assets[0].uri.split('/');
+      const fileName = uriParts[uriParts.length - 1];
 
       const formData = new FormData();
       console.log(formData)
       formData.append('file', {
         uri: result.assets[0].uri,
         type: 'image/jpeg', // Specify the correct MIME type of the image
-        // name: fileName, // Provide a name for the file
+        name: fileName, // Provide a name for the file
       });
   
       const response = await axios.post('https://cnn-model-api-deployment-ac2b40fcf26d.herokuapp.com/predict', formData, {
