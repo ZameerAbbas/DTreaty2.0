@@ -1,6 +1,7 @@
+import { registerRootComponent } from "expo";
 import * as React from "react";
+import { AppRegistry} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
-import * as tf from "@tensorflow/tfjs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./Components/HomeScreen";
 import CameraScreen from "./Components/CameraScreen";
@@ -11,6 +12,7 @@ import FramAreaCal from "./Components/FramAreaCal"
 import Laibaray from "./Components/Laibaray"
 import Shop from "./Components/Shop"
 import NearMe from "./Components/NearMe"
+
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +60,7 @@ export default function App() {
           component={Shop}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name="NearMe"
           component={NearMe}
@@ -67,3 +70,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+AppRegistry.registerComponent('main', () => App);

@@ -26,10 +26,6 @@ import Footer from "./Footer";
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  const navigateToCameraScreen = () => {
-    navigation.navigate("CameraScreen");
-  };
-
   const navigateToClassificationScreen = () => {
     navigation.navigate("ClassificationScreen");
   };
@@ -223,11 +219,11 @@ const HomeScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                onPress={navigateToComingSoon}
+                onPress={navigateToLaibaray}
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="stopwatch" size={24} color="#FFFFFF" />
-                  <Text style={styles.buttonText}>Coming Soon</Text>
+                  <Text style={styles.buttonText}>Treatment</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
