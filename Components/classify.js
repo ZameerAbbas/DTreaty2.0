@@ -51,10 +51,10 @@ const ImageClassifier = () => {
 
   const getPrediction = async (result) => {
     try {
-      if (!result || !result.assets[0].uri) {
-        console.error('Invalid image data:', result);
-        return;
-      }
+      // if (!result || !result.assets[0].uri) {
+      //   console.error('Invalid image data:', result);
+      //   return;
+      // }
       const uriParts = result.assets[0].uri.split('/');
       const fileName = uriParts[uriParts.length - 1];
 
@@ -62,8 +62,8 @@ const ImageClassifier = () => {
       console.log(formData)
       formData.append('file', {
         uri: result.assets[0].uri,
-        type: 'image/jpeg', // Specify the correct MIME type of the image
-        name: fileName, // Provide a name for the file
+        type: 'image/jpeg',
+        name: fileName,
       });
   
       const response = await axios.post('https://cnn-model-api-deployment-ac2b40fcf26d.herokuapp.com/predict', formData, {
