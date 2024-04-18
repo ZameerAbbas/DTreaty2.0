@@ -1,6 +1,5 @@
 import { registerRootComponent } from "expo";
 import * as React from "react";
-import { AppRegistry} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./Components/HomeScreen";
@@ -70,5 +69,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-AppRegistry.registerComponent('main', () => App);
