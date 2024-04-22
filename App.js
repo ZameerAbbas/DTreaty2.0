@@ -11,6 +11,7 @@ import FramAreaCal from "./Components/FramAreaCal"
 import Laibaray from "./Components/Laibaray"
 import Shop from "./Components/Shop"
 import NearMe from "./Components/NearMe"
+import OfflineClassifier from "./Components/Offline_Prediction";
 
 
 const Stack = createNativeStackNavigator();
@@ -25,8 +26,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="CameraScreen"
-          component={CameraScreen}
+          name="OfflineScreen"
+          component={OfflineClassifier}
           options={{ headerShown: false }}
         />
         <Stack.Screen

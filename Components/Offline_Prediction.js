@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, Button } from "react-native";
 import * as tf from "@tensorflow/tfjs";
-import * as tfnode from "@tensorflow/tfjs-node";
 import { manipulateAsync } from "expo-image-manipulator";
 import * as ImagePicker from 'expo-image-picker';
 import { Asset } from "expo-asset";
@@ -32,7 +31,7 @@ class JSONHandler {
   }
 }
 
-export default function ImageClassifier() {
+export default function OfflineClassifier() {
   const [model, setModel] = useState(null);
   const [predictions, setPredictions] = useState([]);
   const [Label, setLabel] = useState([]);
@@ -51,7 +50,7 @@ export default function ImageClassifier() {
         quality: 1,
       });
       console.log("Image Picker Result:", result.assets[0].uri);
-      if (!result.cancelled) {
+      if (!result.canceled) {
         setPickedImage(result.assets[0].uri);
       } else {
         console.log("Image picker was cancelled");
@@ -66,7 +65,7 @@ export default function ImageClassifier() {
         [{ resize: { width: 224, height: 224 } }],
         { compress: 1, format: "jpeg" }
       );
-        console.log(typeof(manipulatedImage));
+        // console.log(typeof(manipulatedImage));
       if(!manipulatedImage){
         throw new error("Image data is Null")
       }

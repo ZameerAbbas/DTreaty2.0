@@ -40,13 +40,13 @@ const HomeScreen = () => {
     navigation.navigate("FramAreaCal");
   };
   const navigateToShop = () => {
-    navigation.navigate("Shop");
+    navigation.navigate("OfflineScreen");
   };
   const navigateToNearMe = () => {
     navigation.navigate("NearMe");
   };
   const navigateToLaibaray = () => {
-    navigation.navigate("Laibaray");
+    navigation.navigate("OfflineScreen");
   };
   const [greeting, setGreeting] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
