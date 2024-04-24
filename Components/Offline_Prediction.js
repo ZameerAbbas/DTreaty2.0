@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, Button } from "react-native";
 import * as tf from "@tensorflow/tfjs";
 import { manipulateAsync } from "expo-image-manipulator";
+import ImgToBase64 from 'react-native-image-base64';
 import * as ImagePicker from 'expo-image-picker';
 import { Asset } from "expo-asset";
-import { bundleResourceIO } from "@tensorflow/tfjs-react-native";
+import { bundleResourceIO, decodeJpeg, decodeImage } from "@tensorflow/tfjs-react-native";
 import { decode } from "base64-arraybuffer";
 
 // Define the JSONHandler class
@@ -35,7 +36,7 @@ export default function OfflineClassifier() {
   const [model, setModel] = useState(null);
   const [predictions, setPredictions] = useState([]);
   const [Label, setLabel] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const [pickedImage, setPickedImage] = useState('');
 
 
@@ -52,6 +53,7 @@ export default function OfflineClassifier() {
       console.log("Image Picker Result:", result.assets[0].uri);
       if (!result.canceled) {
         setPickedImage(result.assets[0].uri);
+        console.log(typeof(pickedImage))
       } else {
         console.log("Image picker was cancelled");
       }
@@ -65,31 +67,31 @@ export default function OfflineClassifier() {
         [{ resize: { width: 224, height: 224 } }],
         { compress: 1, format: "jpeg" }
       );
-        // console.log(typeof(manipulatedImage));
-      if(!manipulatedImage){
+      // console.log(typeof(manipulatedImage));
+      if (!manipulatedImage) {
         throw new error("Image data is Null")
       }
-      const base64Data = manipulatedImage.split(",")[1];
+      const base64Data = manipulatedImage;
 
       // Decode the Base64-encoded image data to an ArrayBuffer
-      const arrayBuffer = decode(base64Data);
-      // const  { uri : pickedImage} = manipulatedImage;
+      // const  { uri : pickedImage} = manipulatedImage.assets[0].uri;
       // Decode the manipulated image to a tensor
-      const imageTensor = tf.node.decodeImage(arrayBuffer);
-  
+      const arrayBuffer = decode(base64Data);
+      const imageTensor = decodeImage(arrayBuffer);
+
       // Normalize the image tensor from [0, 255] to [0, 1]
       const normalized = imageTensor.toFloat().div(tf.scalar(255));
-  
+
       // Reshape the image tensor to match model input shape
-      const reshapedImage = normalized.reshape([-1, 224, 224, 3]);
-  
+      const reshapedImage = normalized.reshape([1, 224, 224, 3]);
+
       return reshapedImage;
     } catch (error) {
       console.error('Error processing image:', error);
       return null;
     }
   };
-  
+
 
   useEffect(() => {
     // Load the model and initialize TensorFlow.js
@@ -125,7 +127,7 @@ export default function OfflineClassifier() {
     // Process the image and pass it to the model for prediction
     try {
       const imageArray = await pickImage();
-      console.log("image array is : "+ imageArray);
+      console.log("image array is : " + imageArray);
       const predictions = await model.predict(tf.tensor([imageArray])).data();
       setPredictions(predictions);
       const predicted_class = tf.argMax(predictions).dataSync()[0];
@@ -135,29 +137,29 @@ export default function OfflineClassifier() {
       console.error("Error processing or predicting:", error);
     }
   };
-  
+
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      
+
       <Button
         title="Pick an image"
         onPress={pickImage}
-      /> 
-      {
-        pickedImage  && <Image
-        source={{ uri: pickedImage }}
-        style={{ width: 200, height: 200, margin: 40 }}
       />
+      {
+        pickedImage && <Image
+          source={{ uri: pickedImage }}
+          style={{ width: 200, height: 200, margin: 40 }}
+        />
       }
       {isLoading ? (
         <Text>Loading Model...</Text>
       ) : (
         <Text>Model Loaded Successfully!</Text>
-       
+
       )}
       {/* <Text>{Label}</Text> */}
-      
+
     </View>
   );
 }
