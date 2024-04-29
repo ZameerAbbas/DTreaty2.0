@@ -237,7 +237,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                onPress={navigateToComingSoon}
+                onPress={navigateToNearMe}
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="stopwatch" size={24} color="#FFFFFF" />
