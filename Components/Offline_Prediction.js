@@ -310,6 +310,8 @@ import { View, Text, Image, Button } from "react-native";
 import * as tf from "@tensorflow/tfjs";
 import * as ImagePicker from 'expo-image-picker';
 import { bundleResourceIO } from "@tensorflow/tfjs-react-native";
+import { manipulateAsync } from 'expo-image-manipulator';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { Buffer } from 'buffer';
 import * as FileSystem from 'expo-file-system';
 import * as jpeg from 'jpeg-js'
@@ -402,16 +404,30 @@ export default function OfflineClassifier() {
 
   const classifyImages = async (imageUri) => {
     try {
-      const base64Data = await FileSystem.readAsStringAsync(imageUri, {
+      console.log("Image URI: ", imageUri);
+      const resizedImage = await ImageManipulator.manipulateAsync(
+        imageUri,
+        [{ resize: { width: 224, height: 224 } }],
+      );
+      console.log("Resized Image: ", resizedImage.uri);
+  
+      const base64Data = await FileSystem.readAsStringAsync(resizedImage.uri, {
         encoding: FileSystem.EncodingType.Base64,
       });
       const uint8Array = Buffer.from(base64Data, 'base64');
-      const imageTensor = imageToTensor(uint8Array, 3);
-      console.log("Image Tensor: ",imageTensor)
+      const imageTensor = imageToTensor(uint8Array, 3); // Ensure this function correctly converts the image data to a tensor
+      console.log("Image Tensor: ", imageTensor);
+      
+      // Check the shape of the image tensor and adjust as necessary
+      console.log("Image Tensor Shape: ", imageTensor.shape);
+      
       const normalized = imageTensor.toFloat().div(tf.scalar(255));
-      console.log('Normalized: ',normalized)
+      console.log('Normalized: ', normalized);
+      
+      // Reshape the tensor to match the expected input shape of your model
       const reshapedImage = tf.reshape(normalized, [-1, 224, 224, 3]);
-      console.log("Reshaped Image: ",reshapedImage)
+      console.log("Reshaped Image: ", reshapedImage);
+      
       predictWithModel(reshapedImage);
     } catch (error) {
       console.error("Error processing or predicting:", error);
