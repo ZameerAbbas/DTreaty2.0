@@ -65,7 +65,7 @@ const HomeScreen = () => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000);
-
+    // fggdm
     return () => clearInterval(interval);
   }, []);
 
