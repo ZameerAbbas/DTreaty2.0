@@ -22,8 +22,8 @@ const YoutubeSlider = () => {
       <View style={styles.container}>
         <TouchableOpacity onPress={openYouTubeApp} style={styles.videoCont}>
         <YoutubeIframe
-          width={'40%'}
-          height={"50%"}
+          // width={'40%'}
+          // height={"50%"}
           play={false}
           videoId={'an9me4glKQU'}
         />
@@ -40,9 +40,7 @@ const YoutubeSlider = () => {
   
   const styles = StyleSheet.create({
     container: {
-      paddingTop: 143,
-      
-      
+      paddingTop: 17,
     },
     videoCont:{
       height:164,

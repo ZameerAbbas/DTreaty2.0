@@ -53,6 +53,9 @@ const HomeScreen = () => {
   const navigateToLaibaray = () => {
     navigation.navigate("Laibaray");
   };
+  const navigatetoYoutube = () => {
+    navigation.navigate("VideosList");
+  };
 
 
   const [greeting, setGreeting] = useState("");
@@ -143,7 +146,9 @@ const HomeScreen = () => {
           </View>
           <View style={styles.cartbox}>
             <View style={styles.cartnotif}>
-              <Ionicons name="notifications" size={27} color="#343434" />
+              <TouchableOpacity onPress={navigatetoYoutube}>
+                <Ionicons name="notifications" size={27} color="#343434" />
+              </TouchableOpacity>
             </View>
             <View>
               <MaterialIcons name="shopping-cart" size={27} color="#343434" />
