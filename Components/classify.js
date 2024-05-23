@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, Dimensions, ImageBackground, StatusBar } from 'react-native';
 import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
@@ -23,7 +20,7 @@ const ImageClassifier = () => {
       mediaTypes: 'Images',
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.5,
     });
 
   
@@ -39,7 +36,7 @@ const ImageClassifier = () => {
       mediaTypes: 'Images',
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.5,
     });
   
     if (!result.canceled) {
@@ -51,10 +48,6 @@ const ImageClassifier = () => {
 
   const getPrediction = async (result) => {
     try {
-      // if (!result || !result.assets[0].uri) {
-      //   console.error('Invalid image data:', result);
-      //   return;
-      // }
       const uriParts = result.assets[0].uri.split('/');
       const fileName = uriParts[uriParts.length - 1];
 

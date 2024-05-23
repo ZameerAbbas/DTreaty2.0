@@ -12,6 +12,7 @@ import Laibaray from "./Components/Laibaray"
 import Shop from "./Components/Shop"
 import NearMe from "./Components/NearMe"
 import OfflineClassifier from "./Components/Offline_Prediction";
+import DiseaseDetailsScreen from "./Components/diseaseDetail";
 
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +39,11 @@ export default function App() {
         <Stack.Screen
           name="ComingSoon"
           component={ComingSoon}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DiseaseDetailsMain"
+          component={DiseaseDetailsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

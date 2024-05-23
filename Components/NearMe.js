@@ -1,90 +1,136 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, Button } from 'react-native';
-import * as tf from '@tensorflow/tfjs';
-import { decodeJpeg } from '@tensorflow/tfjs-react-native';
-import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, Image, Button, ActivityIndicator } from "react-native";
+import * as tf from "@tensorflow/tfjs";
+import { Camera } from 'expo-camera';
+import * as ImageManipulator from 'expo-image-manipulator';
+import { bundleResourceIO } from "@tensorflow/tfjs-react-native";
 
-const NearMe = () => {
-  const [isTfReady, setIsTfReady] = useState(false);
-  const [result, setResult] = useState('');
-  const [pickedImage, setPickedImage] = useState('');
-  const [model, setModel] = useState(null);
+export default function NearMe() {
+  // const [model, setModel] = useState(null);
+  // const [predictions, setPredictions] = useState([]);
+  // const [label, setLabel] = useState('');
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [pickedImage, setPickedImage] = useState('');
+  // const [cameraPermission, setCameraPermission] = useState(null);
+  // const [cameraReady, setCameraReady] = useState(false);
+  // const cameraRef = useRef(null);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      setPickedImage(result.assets[0].uri);
-    }
-  };
+  // useEffect(() => {
+  //   const loadModel = async () => {
+  //     try {
+  //       await tf.ready();
+  //       const modelJSON = require("../assets/models/model.json");
+  //       const modelWeights = require("../assets/models/group1-shard1of1.bin");
+  //       const model = await tf.loadGraphModel(
+  //         bundleResourceIO(modelJSON, modelWeights)
+  //       );
+  //       model.predict(tf.zeros([1, 224, 224, 3]));
+  //       setModel(model);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       console.error("Error loading model:", error);
+  //     }
+  //   };
 
-  const classifyUsingCustomModel = async () => {
-    try {
-      await tf.ready();
-      setIsTfReady(true);
+  //   loadModel();
+  // }, []);
 
-      // Load your custom model
-      const modelJson = require('../assets/models/model.json');
-      const modelWeights = require('../assets/models/group1-shard1of1.bin');
-      const loadedModel = await tf.loadGraphModel(
-        bundleResourceIO(modelJson, modelWeights)
-      );
-      setModel(loadedModel);
+  // const handleCameraReady = () => {
+  //   setCameraReady(true);
+  // };
 
-      const imgB64 = await FileSystem.readAsStringAsync(pickedImage, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-      const imgBuffer = Buffer.from(imgB64, 'base64');
-      const raw = new Uint8Array(imgBuffer);
-      const imageTensor = decodeJpeg(raw);
+  // const takePicture = async () => {
+  //   if (cameraRef.current) {
+  //     const photo = await cameraRef.current.takePictureAsync({ quality: 1 });
+  //     return photo.uri;
+  //   }
+  //   return null;
+  // };
 
-      // Perform inference with your custom model
-      const prediction = model.predict(imageTensor);
-      setResult(prediction.toString()); // You should process the prediction according to your model output
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const classifyImages = async (imageUri) => {
+  //   try {
+  //     console.log('image:', imageUri)
+  //     const resizedImage = await ImageManipulator.manipulateAsync(
+  //       imageUri,
+  //       [{ resize: { width: 224, height: 224 } }],
+  //     );
+  //     console.log(resizedImage);
+  //     const base64Data = await FileSystem.readAsStringAsync(resizedImage, {
+  //       encoding: FileSystem.EncodingType.Base64,
+  //     });
+  //     const uint8Array = Buffer.from(base64Data, 'base64');
+  //     const imageTensor = imageToTensor(uint8Array, 3);
+  //     const normalized = imageTensor.toFloat().div(tf.scalar(255));
+  //     const reshapedImage = tf.reshape(normalized, [-1, 224, 224, 3]);
+      
+  //     predictWithModel(reshapedImage);
+  //   } catch (error) {
+  //     console.error("Error classifying image:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (pickedImage) {
-      classifyUsingCustomModel();
-    }
-  }, [pickedImage]);
+  // const predictWithModel = async (imageTensor) => {
+  //   try {
+  //     const predictions = await model.predict(imageTensor).data();
+  //     const predicted_class = tf.argMax(predictions).dataSync()[0];
+  //     const predicted_class_name = class_names[predicted_class];
+  //     setLabel(predicted_class_name);
+  //   } catch (error) {
+  //     console.error("Error predicting with model:", error);
+  //   }
+  // };
+
+  // const imageToTensor = (rawImageData) => {
+  //   const TO_UINT8ARRAY = true;
+  //   const { width, height, data } = jpeg.decode(rawImageData, TO_UINT8ARRAY);
+  //   const buffer = new Uint8Array(width * height * 3);
+  //   let offset = 0;
+  //   for (let i = 0; i < buffer.length; i += 3) {
+  //       buffer[i] = data[offset];
+  //       buffer[i + 1] = data[offset + 1];
+  //       buffer[i + 2] = data[offset + 2];
+  //       offset += 3;
+  //   }
+  //   return tf.tensor3d(buffer, [height, width, 3]);
+  // };
+
+  // const renderCamera = () => {
+  //   return (
+  //     <View>
+  //     <Camera
+  //       style={{ height:400, width:300}}
+  //       type={Camera.Constants.Type.back}
+  //       ref={cameraRef}
+  //       onCameraReady={handleCameraReady}
+  //     >
+  //     </Camera>
+  //       <View style={{ height:'auto', width: '50%', }}>
+  //         <Button title="Take Picture" onPress={()=>{
+  //           handleCameraReady();
+  //           takePicture();
+  //           classifyImages();
+  //         }} disabled={!cameraReady} />
+  //       </View>
+  //       </View>
+  //   );
+  // };
 
   return (
-    <View
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      {pickedImage && <Image
-        source={{ uri: pickedImage }}
-        style={{ width: 200, height: 200, margin: 40 }}
-      />}
-      {isTfReady && (
-        <Button
-          title="Pick an image"
-          onPress={pickImage}
-        />
-      )}
-      <View style={{ width: '100%', height: 20 }} />
-      {!isTfReady && <Text>Loading TFJS model...</Text>}
-      {isTfReady && result === '' && <Text>Pick an image to classify!</Text>}
-      {result !== '' && <Text>{result}</Text>}
+    // <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    //   {isLoading ? (
+    //     <ActivityIndicator size="large" color="#0000ff" />
+    //   ) : (
+    //     <>
+    //       <View style={{ flex: 1 }}>
+    //       {renderCamera()}
+    //     </View>
+    //       {/* {pickedImage && <Image source={{ uri: pickedImage }} style={{ width: 200, height: 200, margin: 40 }} />} */}
+    //       {label ? <Text>The Predicted Label is {label}</Text> : <Text> </Text>}
+    //     </>
+    //   )}
+    // </View>
+    <View style={{flex:1, justifyContent:"center", alignItems:'center'}}>
+      <Text>Hello I am dummy Text. Help my developer from getting error.</Text>
     </View>
   );
-};
-
-export default NearMe;
-
-
+}
