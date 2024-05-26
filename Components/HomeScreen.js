@@ -45,7 +45,7 @@ const HomeScreen = () => {
     navigation.navigate("FramAreaCal");
   };
   const navigateToShop = () => {
-    navigation.navigate("OfflineScreen");
+    navigation.navigate("Shop");
   };
   const navigateToNearMe = () => {
     navigation.navigate("NearMe");
@@ -174,9 +174,7 @@ const HomeScreen = () => {
           </View>
           {/* Components */}
 
-
           <Text style={[styles.headingtil, {marginTop: 10}]}>Our Services</Text>
-
 
           <View style={styles.GridConatiner}>
             <View style={styles.MainNavicationGrid}>
@@ -271,12 +269,6 @@ const HomeScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-          {/* <View style={styles.youtubeContainer}>
-
-            <YoutubeSlider/>
-            <YoutubeSlider/>
-          </View> */}
-
           <Footer/>
         </View>
       </ImageBackground>

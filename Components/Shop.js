@@ -1,12 +1,10 @@
 import { View, Text,StyleSheet } from 'react-native'
 import React from 'react'
-import Footer from './Footer'
 
 const Shop = () => {
   return (
     <View style={styles.conatiner}>
       <Text>Shop</Text>
-      <Footer/>
     </View>
   )
 }
@@ -22,6 +20,4 @@ const styles = StyleSheet.create({
       alignItems: "center",
       height:1000
     }
-  
-  
   })
