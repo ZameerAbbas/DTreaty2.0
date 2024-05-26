@@ -65,7 +65,7 @@ export default function App() {
         <Stack.Screen
           name="Shop"
           component={Shop}
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
         />
 
         <Stack.Screen
