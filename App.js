@@ -14,6 +14,7 @@ import NearMe from "./Components/NearMe"
 import OfflineClassifier from "./Components/Offline_Prediction";
 import DiseaseDetailsScreen from "./Components/diseaseDetail";
 import YoutubeVideos from "./Components/YoutubeVideos";
+import ResultScreen from "./Components/treatment";
 
 
 const Stack = createNativeStackNavigator();
@@ -71,6 +72,11 @@ export default function App() {
         <Stack.Screen
           name="NearMe"
           component={NearMe}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="treatment"
+          component={ResultScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
