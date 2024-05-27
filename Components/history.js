@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Alert} from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 
 const History = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const [savedData, setSavedData] = useState([]);
 
   useEffect(() => {
@@ -34,40 +34,40 @@ const History = () => {
 
   const clearData = async () => {
     try {
-        Alert.alert("Delete", "Are You Sure!", [
-            {
-              text: "Yes",
-              onPress: async () => {
-                await AsyncStorage.clear();
-                navigation.navigate("DiagnoseScreen");
-              },
-              style: "cancel",
-            },
-            {
-              text: "No",
-              onPress: () => {
-                navigation.navigate('DiagnoseScreen');
-              },
-            },
-          ]);
-    //   await AsyncStorage.clear();
-    //   navigation.navigate("DiagnoseScreen");
+      Alert.alert("Delete", "Are You Sure!", [
+        {
+          text: "Yes",
+          onPress: async () => {
+            await AsyncStorage.clear();
+            navigation.navigate("DiagnoseScreen");
+          },
+          style: "cancel",
+        },
+        {
+          text: "No",
+          onPress: () => {
+            navigation.navigate('DiagnoseScreen');
+          },
+        },
+      ]);
+      //   await AsyncStorage.clear();
+      //   navigation.navigate("DiagnoseScreen");
     } catch (error) {
-        Alert.alert("Error", "Please GO BACK", [
-            {
-              text: "Cancel",
-              onPress: () => {
-                navigation.navigate('DiagnoseScreen');
-              },
-              style: "cancel",
-            },
-            {
-              text: "OK",
-              onPress: () => {
-                navigation.navigate('DiagnoseScreen');
-              },
-            },
-          ]);
+      Alert.alert("Error", "Please GO BACK", [
+        {
+          text: "Cancel",
+          onPress: () => {
+            navigation.navigate('DiagnoseScreen');
+          },
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.navigate('DiagnoseScreen');
+          },
+        },
+      ]);
     }
   };
 
@@ -76,10 +76,10 @@ const History = () => {
   };
 
   return (
-    
+
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.heading}>Saved Diseases</Text>
+        <Text style={styles.heading}>History</Text>
         <TouchableOpacity onPress={clearData}>
           <Ionicons name="trash" size={30} color="white" />
         </TouchableOpacity>
@@ -88,24 +88,24 @@ const History = () => {
         data={savedData.reverse()}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleItemPress(item)}>
-          <View style={styles.itemContainer}>
-            <Image
-              source={{uri: item.image}}
-              style={styles.image}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text  numberOfLines={2} style={styles.symptoms}>Symptoms: {item.Symptoms}</Text>
-              <Text  numberOfLines={2} style={styles.treatment}>Treatment: {item.treatment}</Text>
+            <View style={styles.itemContainer}>
+              <Image
+                source={{ uri: item.image }}
+                style={styles.image}
+              />
+              <View style={styles.textContainer}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text numberOfLines={2} style={styles.symptoms}>Symptoms: {item.Symptoms}</Text>
+                <Text numberOfLines={2} style={styles.treatment}>Treatment: {item.treatment}</Text>
+              </View>
             </View>
-          </View>
           </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
-    
+
   );
 };
 
