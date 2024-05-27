@@ -15,6 +15,8 @@ import OfflineClassifier from "./Components/Offline_Prediction";
 import DiseaseDetailsScreen from "./Components/diseaseDetail";
 import YoutubeVideos from "./Components/YoutubeVideos";
 import ResultScreen from "./Components/treatment";
+import History from "./Components/history";
+import DiseaseDetailsHistoryScreen from "./Components/DiseaseDetails";
 
 
 const Stack = createNativeStackNavigator();
@@ -77,6 +79,16 @@ export default function App() {
         <Stack.Screen
           name="treatment"
           component={ResultScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="History"
+          component={History}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HistoryDeatils"
+          component={DiseaseDetailsHistoryScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
