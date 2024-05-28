@@ -20,8 +20,9 @@ const WeatherForecast = () => {
   useEffect(() => {
     const fetchWeatherData = async (latitude, longitude) => {
       try {
-        const apiKey = "432a8658a6991c2c948f1125de99c13d";
-        const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+        setLoading(true);
+        const apiKey = "432a8658a6991c2c948f1125de99c13d"; // Replace with your OpenWeather API key
+        const apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
 
         const response = await fetch(apiUrl);
 
@@ -31,9 +32,11 @@ const WeatherForecast = () => {
 
         const data = await response.json();
         setWeatherData(data);
+        setLoading(false);
 
       } catch (error) {
         console.error("Error fetching weather data:", error.message);
+        setLoading(false);
       }
     };
 
@@ -69,18 +72,18 @@ const WeatherForecast = () => {
   const DayForecast = ({ day, temperature, description }) => {
     const getImageSource = (description) => {
       switch (description) {
-        case "sunny":
+        case "Clear":
           return require("../assets/images/sun.png");
-        case "snowy":
+        case "Snow":
           return require("../assets/images/cloud.png");
-        case "rainy":
+        case "Rain":
           return require("../assets/images/heavy-rain.png");
-        case "cloudy":
+        case "Clouds":
           return require("../assets/images/snow.png");
-        case "heavy-rain":
+        case "Thunderstorm":
           return require("../assets/images/raincloud.png");
         default:
-          return null;
+          return require("../assets/images/sun.png");
       }
     };
     return (
@@ -95,13 +98,14 @@ const WeatherForecast = () => {
     );
   };
 
-  const forecastData = [
-    { day: "Mon", temperature: "23°-07°", description: "sunny" },
-    { day: "Tue", temperature: "23°-07°", description: "snowy" },
-    { day: "Wed", temperature: "-01°-01°", description: "cloudy" },
-    { day: "Thu", temperature: "11°-07°", description: "rainy" },
-    { day: "Fri", temperature: "15°-13°", description: "heavy-rain" },
-  ];
+  const forecastDays = weatherData ? weatherData.daily.slice(1, 6).map((day, index) => {
+    const date = new Date(day.dt * 1000);
+    const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const temp = `${Math.round(day.temp.day)}° - ${Math.round(day.temp.night)}°`;
+    const description = day.weather[0].main;
+
+    return { day: dayName, temperature: temp, description };
+  }) : [];
 
   return (
     <View style={styles.container}>
@@ -133,14 +137,14 @@ const WeatherForecast = () => {
               source={require("../assets/images/sun.png")}
             />
             <Text style={styles.weathertext}>
-              {Math.ceil(weatherData.current.temp - 273.15)}°C
+              {Math.ceil(weatherData.current.temp)}°C
             </Text>
           </View>
         ) : null}
       </View>
       <View style={styles.forecastContainer}>
         <Text style={styles.forecastTitle}>5-day forecast</Text>
-        {forecastData.map((data, index) => (
+        {forecastDays.map((data, index) => (
           <DayForecast
             key={index}
             day={data.day}
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: 70,
-    backgroundColor: "#fffff",
+    backgroundColor: "#fff",
   },
   searchContainer: {
     flexDirection: "row",
@@ -190,7 +194,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 15,
   },
-
   currentWeatherText: {
     fontSize: 24,
     fontWeight: "bold",
@@ -214,6 +217,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#f0f0f0",
   },
   forecastimage: {
     height: 40,
