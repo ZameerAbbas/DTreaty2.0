@@ -37,6 +37,9 @@ const HomeScreen = () => {
   const navigateToComingSoon = () => {
     navigation.navigate("ComingSoon");
   };
+  const navigateToOfflinepred = () => {
+    navigation.navigate("OfflineScreen");
+  };
 
   const navigateToWeatherScreen = () => {
     navigation.navigate("Weather");
@@ -44,7 +47,7 @@ const HomeScreen = () => {
   const navigateToFramAreaCal = () => {
     navigation.navigate("FramAreaCal");
   };
-  const navigateToShop = () => {
+  const navigateToLibrary = () => {
     navigation.navigate("TreatmentShop");
   };
   const navigateToNearMe = () => {
@@ -176,7 +179,7 @@ const HomeScreen = () => {
 
           <View style={styles.GridConatiner}>
             <View style={styles.MainNavicationGrid}>
-              <TouchableOpacity style={styles.button} onPress={navigateToShop}>
+              <TouchableOpacity style={styles.button} onPress={navigateToLibrary}>
                 <View style={styles.ButtonFlex}>
                   <Ionicons
                     name="library"
@@ -192,7 +195,7 @@ const HomeScreen = () => {
                 onPress={navigateToClassificationScreen}
               >
                 <View style={styles.ButtonFlex}>
-                  <Ionicons name="scan" size={35} color="#FFFFFF" />
+                  <AntDesign name="scan1" size={35} color="#FFFFFF" />
                   <Text style={styles.buttonText}>Crop Doctor</Text>
                 </View>
               </TouchableOpacity>
@@ -231,11 +234,11 @@ const HomeScreen = () => {
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={navigateToLaibaray}
+                onPress={navigateToOfflinepred}
               >
                 <View style={styles.ButtonFlex}>
-                  <Entypo name="stopwatch" size={35} color="#FFFFFF" />
-                  <Text style={styles.buttonText}>Laibaray</Text>
+                <AntDesign name="scan1" size={35} color="#FFFFFF" />
+                  <Text style={styles.buttonText}>Offline Prediction</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
@@ -244,7 +247,7 @@ const HomeScreen = () => {
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="stopwatch" size={35} color="#FFFFFF" />
-                  <Text style={styles.buttonText}>Treatment</Text>
+                  <Text style={styles.buttonText}>Coming Soon</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
