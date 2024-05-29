@@ -69,23 +69,26 @@ const WeatherForecast = () => {
     }
   };
 
+  const getImageSource = (description) => {
+    switch (description) {
+      case "Clear":
+        return require("../assets/images/sun.png");
+      case "Snow":
+        return require("../assets/images/cloud.png");
+      case "light rain":
+        return require("../assets/images/cloudy.png");
+      case "Rain":
+        return require("../assets/images/cloudy.png");
+      case "Clouds":
+        return require("../assets/images/raincloud.png");
+      case "Thunderstorm":
+        return require("../assets/images/heavy-rain.png");
+      default:
+        return require("../assets/images/sun.png");
+    }
+  };
+
   const DayForecast = ({ day, temperature, description }) => {
-    const getImageSource = (description) => {
-      switch (description) {
-        case "Clear":
-          return require("../assets/images/sun.png");
-        case "Snow":
-          return require("../assets/images/cloud.png");
-        case "Rain":
-          return require("../assets/images/heavy-rain.png");
-        case "Clouds":
-          return require("../assets/images/snow.png");
-        case "Thunderstorm":
-          return require("../assets/images/raincloud.png");
-        default:
-          return require("../assets/images/sun.png");
-      }
-    };
     return (
       <View style={styles.dayForecastContainer}>
         <Image
@@ -106,6 +109,8 @@ const WeatherForecast = () => {
 
     return { day: dayName, temperature: temp, description };
   }) : [];
+
+  const currentWeatherImageSource = weatherData ? getImageSource(weatherData.current.weather[0].main) : null;
 
   return (
     <View style={styles.container}>
@@ -134,7 +139,7 @@ const WeatherForecast = () => {
             <Text style={styles.weathertext}>{displayedCity}</Text>
             <Image
               style={styles.weatherimage}
-              source={require("../assets/images/sun.png")}
+              source={currentWeatherImageSource}
             />
             <Text style={styles.weathertext}>
               {Math.ceil(weatherData.current.temp)}°C
@@ -237,3 +242,6 @@ const styles = StyleSheet.create({
 });
 
 export default WeatherForecast;
+
+
+

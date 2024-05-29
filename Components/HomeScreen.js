@@ -45,7 +45,7 @@ const HomeScreen = () => {
     navigation.navigate("FramAreaCal");
   };
   const navigateToShop = () => {
-    navigation.navigate("Shop");
+    navigation.navigate("TreatmentShop");
   };
   const navigateToNearMe = () => {
     navigation.navigate("NearMe");
@@ -178,12 +178,12 @@ const HomeScreen = () => {
             <View style={styles.MainNavicationGrid}>
               <TouchableOpacity style={styles.button} onPress={navigateToShop}>
                 <View style={styles.ButtonFlex}>
-                  <MaterialCommunityIcons
-                    name="shopping-outline"
+                  <Ionicons
+                    name="library"
                     size={35}
                     color="#FFFFFF"
                   />
-                  <Text style={styles.buttonText}>Shop</Text>
+                  <Text style={styles.buttonText}>Library</Text>
                 </View>
               </TouchableOpacity>
 

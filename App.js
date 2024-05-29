@@ -9,7 +9,7 @@ import ComingSoon from "./Components/ComingSoon"
 import Weather from "./Components/Weather";
 import FramAreaCal from "./Components/FramAreaCal"
 import Laibaray from "./Components/Laibaray"
-import Shop from "./Components/Shop"
+import Libraray from "./Components/Libraray"
 import NearMe from "./Components/NearMe"
 import OfflineClassifier from "./Components/Offline_Prediction";
 import DiseaseDetailsScreen from "./Components/diseaseDetail";
@@ -66,8 +66,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Shop"
-          component={Shop}
+          name="TreatmentShop"
+          component={Libraray}
           options={{ headerShown: true }}
         />
 

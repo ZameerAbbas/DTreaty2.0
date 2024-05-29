@@ -1,8 +1,8 @@
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet, Text } from 'react-native'
 import React from 'react'
 import Item from "./commonDisease";
 
-const Shop = () => {
+const Libraray = () => {
 
   const DATA = [
     {
@@ -61,11 +61,18 @@ const Shop = () => {
   )
 }
 
-export default Shop
+export default Libraray;
 
 const styles = StyleSheet.create({
     conatiner:{
       flex:1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    header:{
+      height: 110,
+      width:'100%',
+      backgroundColor:'#4DB129',
       justifyContent: "center",
       alignItems: "center",
     }
