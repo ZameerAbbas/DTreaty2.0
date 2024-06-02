@@ -54,6 +54,7 @@
     "react-native-web": "~0.19.6",
     "react-native-webview": "13.2.2",
     "react-native-youtube-iframe": "^2.3.0",
+    "translate": "^3.0.0",
     "undefined": ".expo-dev-client"
   },
   "devDependencies": {
