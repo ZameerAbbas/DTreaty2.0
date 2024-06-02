@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
-  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as tf from "@tensorflow/tfjs";
@@ -40,7 +39,6 @@ const HomeScreen = () => {
   const navigateToOfflinepred = () => {
     navigation.navigate("OfflineScreen");
   };
-
   const navigateToWeatherScreen = () => {
     navigation.navigate("Weather");
   };
@@ -51,7 +49,7 @@ const HomeScreen = () => {
     navigation.navigate("TreatmentShop");
   };
   const navigateToNearMe = () => {
-    navigation.navigate("NearMe");
+    navigation.navigate("VideosList");
   };
   const navigateToLaibaray = () => {
     navigation.navigate("Laibaray");
@@ -68,6 +66,7 @@ const HomeScreen = () => {
   });
   const [currentTime, setCurrentTime] = useState(new Date());
   useEffect(() => {
+
     const interval = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000);
@@ -379,7 +378,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft:13
   }
-
 });
 
 export default HomeScreen;

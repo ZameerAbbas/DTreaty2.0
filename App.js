@@ -94,7 +94,17 @@ export default function App() {
         <Stack.Screen
           name="VideosList"
           component={YoutubeVideos}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: 'Find Your Medicine',
+            headerStyle: {
+              backgroundColor: '#4DB129', // Background color
+            },
+            headerTintColor: '#fff', // Text color
+            headerTitleStyle: {
+              fontWeight: 'bold', // Title text style
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
