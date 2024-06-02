@@ -39,14 +39,14 @@ const History = () => {
           text: "Yes",
           onPress: async () => {
             await AsyncStorage.clear();
-            navigation.navigate("DiagnoseScreen");
+            navigation.navigate('HomeScreen');
           },
           style: "cancel",
         },
         {
           text: "No",
           onPress: () => {
-            navigation.navigate('DiagnoseScreen');
+            navigation.navigate('HomeScreen');
           },
         },
       ]);
@@ -57,14 +57,14 @@ const History = () => {
         {
           text: "Cancel",
           onPress: () => {
-            navigation.navigate('DiagnoseScreen');
+            navigation.navigate('HomeScreen');
           },
           style: "cancel",
         },
         {
           text: "OK",
           onPress: () => {
-            navigation.navigate('DiagnoseScreen');
+            navigation.navigate('HomeScreen');
           },
         },
       ]);
