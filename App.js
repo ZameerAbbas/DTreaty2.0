@@ -68,7 +68,17 @@ export default function App() {
         <Stack.Screen
           name="FramAreaCal"
           component={FramAreaCal}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: 'Farm Calculator',
+            headerStyle: {
+              backgroundColor: '#4DB129', // Background color
+            },
+            headerTintColor: '#fff', // Text color
+            headerTitleStyle: {
+              fontWeight: 'bold', // Title text style
+            },
+          }}
         />
         <Stack.Screen
           name="Laibaray"

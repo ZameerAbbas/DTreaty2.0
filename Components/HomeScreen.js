@@ -140,7 +140,7 @@ const HomeScreen = () => {
         <View style={styles.HeaderContent}>
           <View style={styles.UserProfile}>
             <View>
-              <FontAwesome name="user-circle-o" size={25} color="#343434" />
+              <FontAwesome name="user-circle-o" size={25} color="#fff" />
             </View>
             <View>
               <Text style={styles.greeting}>{greeting}</Text>
@@ -149,7 +149,7 @@ const HomeScreen = () => {
           <View style={styles.cartbox}>
             <View style={styles.cartnotif}>
               <TouchableOpacity onPress={navigatetoHistory}>
-                <MaterialCommunityIcons name="history" size={27} color="#343434" />
+                <MaterialCommunityIcons name="history" size={27} color="#fff" />
               </TouchableOpacity>
             </View>
             
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: "#4DB129",
     padding: 20,
     paddingTop: 50,
     height: 95,
@@ -307,6 +307,7 @@ const styles = StyleSheet.create({
   greeting: {
     fontWeight: "bold",
     paddingHorizontal: 7,
+    color:'#fff'
   },
   cartnotif: {
     paddingHorizontal: 15,
@@ -319,7 +320,7 @@ const styles = StyleSheet.create({
   MainSlider: {
     width: "100%",
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 10,
   },
   
   main: {

@@ -132,7 +132,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
 const Footer = () => {
@@ -179,7 +179,7 @@ const Footer = () => {
                       navigateToShop();
                   }}
               >
-                  <MaterialCommunityIcons name="shopping-outline" size={30} color="#343434" />
+                  <FontAwesome5 name="shopping-bag" size={30} color="#4DB129" />
               </TouchableOpacity>
           </Animated.View>
   
@@ -191,7 +191,7 @@ const Footer = () => {
                       navigateToClassificationScreen();
                   }}
               >
-                  <Ionicons name="scan" size={30} color="#343434" />
+                  <MaterialCommunityIcons name="credit-card-scan" size={35} color="#4DB129" />
               </TouchableOpacity>
           </Animated.View>
   
@@ -203,7 +203,7 @@ const Footer = () => {
                       navigateToHome();
                   }}
               >
-                  <AntDesign name="home" size={30} color="#343434" />
+                  <FontAwesome5 name="home" size={30} color="#4DB129" />
               </TouchableOpacity>
           </Animated.View>
   
@@ -215,7 +215,7 @@ const Footer = () => {
                       navigateToNearMe();
                   }}
               >
-                  <Entypo name="shop" size={30} color="#343434" />
+                  <Entypo name="shop" size={30} color="#4DB129" />
               </TouchableOpacity>
           </Animated.View>
   
@@ -227,7 +227,7 @@ const Footer = () => {
                       navigateToComingSoon();
                   }}
               >
-                  <Feather name="more-horizontal" size={30} color="#343434" />
+                  <MaterialCommunityIcons name="more" size={30} color="#4DB129" />
               </TouchableOpacity>
           </Animated.View>
       </View>
@@ -256,15 +256,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     buttonContainer: {
-        borderRadius: 30,
+        borderRadius: 15,
         overflow: 'hidden',
     },
     button: {
         height: 55,
         width: 55,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        backgroundColor: '#E6E6E6',
         alignItems: 'center',
         justifyContent: 'center',
+        
     },
 });
 
