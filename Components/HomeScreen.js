@@ -3,14 +3,16 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
   FlatList,
   SafeAreaView,
+  Modal,
+  Image
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from 'react-native-elements';
 import * as tf from "@tensorflow/tfjs";
 import { fetch } from "@tensorflow/tfjs-react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -34,7 +36,7 @@ const HomeScreen = () => {
     navigation.navigate("ClassificationScreen");
   };
   const navigateToComingSoon = () => {
-    navigation.navigate("ComingSoon");
+    setModalVisible(true);
   };
   const navigateToOfflinepred = () => {
     navigation.navigate("OfflineScreen");
@@ -60,6 +62,7 @@ const HomeScreen = () => {
 
 
   const [greeting, setGreeting] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
   const [fontsLoaded, fontError] = useFonts({
     "Merriweather-Bold": require("../assets/fonts/Merriweather-Bold.ttf"),
     "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
@@ -152,7 +155,7 @@ const HomeScreen = () => {
                 <MaterialCommunityIcons name="history" size={27} color="#fff" />
               </TouchableOpacity>
             </View>
-            
+
           </View>
         </View>
       </View>
@@ -163,7 +166,7 @@ const HomeScreen = () => {
       >
         <View style={styles.overlay}>
           {/* slider */}
-          <Text style={[styles.headingtil, {marginTop:15}]}>Be aware of these</Text>
+          <Text style={[styles.headingtil, { marginTop: 15 }]}>Be aware of these</Text>
           <View style={styles.MainSlider}>
             <FlatList
               data={DATA}
@@ -174,7 +177,7 @@ const HomeScreen = () => {
           </View>
           {/* Components */}
 
-          <Text style={[styles.headingtil, {marginTop: 10}]}>Our Services</Text>
+          <Text style={[styles.headingtil, { marginTop: 10 }]}>Our Services</Text>
 
           <View style={styles.GridConatiner}>
             <View style={styles.MainNavicationGrid}>
@@ -236,7 +239,7 @@ const HomeScreen = () => {
                 onPress={navigateToOfflinepred}
               >
                 <View style={styles.ButtonFlex}>
-                <AntDesign name="scan1" size={35} color="#FFFFFF" />
+                  <AntDesign name="scan1" size={35} color="#FFFFFF" />
                   <Text style={styles.buttonText}>Offline Prediction</Text>
                 </View>
               </TouchableOpacity>
@@ -268,8 +271,28 @@ const HomeScreen = () => {
                 </View>
               </TouchableOpacity>
             </View>
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Image style={styles.modalImage} source={require('../assets/images/comingsoon.png')} />
+                  <Text style={styles.modalHeadText}>Development Under Progress</Text>
+                  <Text style={styles.modalText}>The feature will be available shortly.</Text>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <Text style={styles.textStyle}>OK</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
           </View>
-          <Footer/>
+          <Footer />
         </View>
       </ImageBackground>
     </SafeAreaView>
@@ -291,11 +314,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headingtil:{
-    color:'white',
-    fontSize:25,
-    marginLeft:13,
-    opacity:0.8,
+  headingtil: {
+    color: 'white',
+    fontSize: 25,
+    marginLeft: 13,
+    opacity: 0.8,
     fontFamily: "Merriweather-Bold",
   },
   UserProfile: {
@@ -307,7 +330,7 @@ const styles = StyleSheet.create({
   greeting: {
     fontWeight: "bold",
     paddingHorizontal: 7,
-    color:'#fff'
+    color: '#fff'
   },
   cartnotif: {
     paddingHorizontal: 15,
@@ -322,7 +345,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
   },
-  
+
   main: {
     flex: 1,
     resizeMode: "contain",
@@ -333,7 +356,7 @@ const styles = StyleSheet.create({
   },
   GridConatiner: {
     padding: 15,
-    },
+  },
   MainNavicationGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -374,11 +397,60 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  youtubeContainer:{
-    width:'100%',
+  youtubeContainer: {
+    width: '100%',
     flexDirection: 'row',
-    marginLeft:13
-  }
+    marginLeft: 13
+  },
+  // Modal Styling
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  closeButton: {
+    backgroundColor: "#4DB129",
+    paddingHorizontal: 50,
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    marginTop: 15
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  modalHeadText: {
+    textAlign: "center",
+    fontWeight: 'bold',
+    marginBottom: 15,
+    fontSize: 16
+  },
+  modalImage: {
+    height: 200,
+    width: 150
+  },
 });
 
 export default HomeScreen;
