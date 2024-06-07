@@ -3,7 +3,6 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./Components/HomeScreen";
-import CameraScreen from "./Components/CameraScreen";
 import ImageClassifier from "./Components/classify";
 import ComingSoon from "./Components/ComingSoon"
 import Weather from "./Components/Weather";
@@ -13,7 +12,6 @@ import Libraray from "./Components/Libraray"
 import NearMe from "./Components/NearMe"
 import OfflineClassifier from "./Components/Offline_Prediction";
 import DiseaseDetailsScreen from "./Components/diseaseDetail";
-import YoutubeVideos from "./Components/YoutubeVideos";
 import ResultScreen from "./Components/treatment";
 import History from "./Components/history";
 import DiseaseDetailsHistoryScreen from "./Components/DiseaseDetails";
@@ -104,7 +102,17 @@ export default function App() {
         <Stack.Screen
           name="NearMe"
           component={NearMe}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: 'Find Your Medicine',
+            headerStyle: {
+              backgroundColor: '#4DB129', // Background color
+            },
+            headerTintColor: '#fff', // Text color
+            headerTitleStyle: {
+              fontWeight: 'bold', // Title text style
+            },
+          }}
         />
         <Stack.Screen
           name="treatment"
@@ -120,21 +128,6 @@ export default function App() {
           name="HistoryDeatils"
           component={DiseaseDetailsHistoryScreen}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="VideosList"
-          component={YoutubeVideos}
-          options={{
-            headerShown: true,
-            title: 'Find Your Medicine',
-            headerStyle: {
-              backgroundColor: '#4DB129', // Background color
-            },
-            headerTintColor: '#fff', // Text color
-            headerTitleStyle: {
-              fontWeight: 'bold', // Title text style
-            },
-          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

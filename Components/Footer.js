@@ -153,7 +153,7 @@ const Footer = () => {
     };
 
     const navigateToShop = () => {
-        navigation.navigate('Shop');
+        navigation.navigate('NearMe');
     };
 
     const navigateToNearMe = () => {
@@ -242,13 +242,12 @@ const styles = StyleSheet.create({
     footer: {
         backgroundColor: "#4DB129",
         height: 80,
-        bottom: 7,
+        bottom: 0,
         paddingHorizontal: 20,
         justifyContent: 'center',
         alignSelf:'center',
         position: "absolute",
-        width: "95%",
-        borderRadius:18,
+        width: "100%",
     },
     footerContent: {
         flexDirection: "row",

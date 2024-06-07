@@ -49,7 +49,7 @@ const HomeScreen = () => {
     navigation.navigate("TreatmentShop");
   };
   const navigateToNearMe = () => {
-    navigation.navigate("VideosList");
+    navigation.navigate("NearMe");
   };
   const navigateToLaibaray = () => {
     navigation.navigate("Laibaray");
@@ -242,7 +242,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                onPress={navigateToLaibaray}
+                onPress={navigateToComingSoon}
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="stopwatch" size={35} color="#FFFFFF" />
@@ -260,7 +260,7 @@ const HomeScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button}
-                onPress={navigateToNearMe}
+                onPress={navigateToComingSoon}
               >
                 <View style={styles.ButtonFlex}>
                   <Entypo name="stopwatch" size={35} color="#FFFFFF" />
