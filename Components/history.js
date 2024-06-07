@@ -49,9 +49,7 @@ const History = () => {
             navigation.navigate('HomeScreen');
           },
         },
-      ]);
-      //   await AsyncStorage.clear();
-      //   navigation.navigate("DiagnoseScreen");
+      ])
     } catch (error) {
       Alert.alert("Error", "Please GO BACK", [
         {

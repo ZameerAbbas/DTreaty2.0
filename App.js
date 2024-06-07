@@ -53,7 +53,17 @@ export default function App() {
         <Stack.Screen
           name="Weather"
           component={Weather}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: 'Weather',
+            headerStyle: {
+              backgroundColor: '#4DB129', // Background color
+            },
+            headerTintColor: '#fff', // Text color
+            headerTitleStyle: {
+              fontWeight: 'bold', // Title text style
+            },
+          }}
         />
         <Stack.Screen
           name="FramAreaCal"
@@ -68,7 +78,17 @@ export default function App() {
         <Stack.Screen
           name="TreatmentShop"
           component={Libraray}
-          options={{ headerShown: true }}
+          options={{
+            headerShown: true,
+            title: 'Disease List',
+            headerStyle: {
+              backgroundColor: '#4DB129', // Background color
+            },
+            headerTintColor: '#fff', // Text color
+            headerTitleStyle: {
+              fontWeight: 'bold', // Title text style
+            },
+          }}
         />
 
         <Stack.Screen
