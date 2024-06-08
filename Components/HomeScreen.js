@@ -16,6 +16,7 @@ import { Button } from 'react-native-elements';
 import * as tf from "@tensorflow/tfjs";
 import { fetch } from "@tensorflow/tfjs-react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import NetInfo from '@react-native-community/netinfo';
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -33,7 +34,14 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   const navigateToClassificationScreen = () => {
-    navigation.navigate("ClassificationScreen");
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
+        navigation.navigate("ClassificationScreen");
+      } else {
+        // If not connected, show the modal
+        setModalVisibleInternet(true);
+      }
+    });
   };
   const navigateToComingSoon = () => {
     setModalVisible(true);
@@ -42,7 +50,15 @@ const HomeScreen = () => {
     navigation.navigate("OfflineScreen");
   };
   const navigateToWeatherScreen = () => {
-    navigation.navigate("Weather");
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
+        navigation.navigate("Weather");
+      } else {
+        // If not connected, show the modal
+        setModalVisibleInternet(true);
+      }
+    });
+
   };
   const navigateToFramAreaCal = () => {
     navigation.navigate("FramAreaCal");
@@ -51,7 +67,14 @@ const HomeScreen = () => {
     navigation.navigate("TreatmentShop");
   };
   const navigateToNearMe = () => {
-    navigation.navigate("NearMe");
+    NetInfo.fetch().then(state => {
+      if (state.isConnected) {
+        navigation.navigate("NearMe");
+      } else {
+        // If not connected, show the modal
+        setModalVisibleInternet(true);
+      }
+    });
   };
   const navigateToLaibaray = () => {
     navigation.navigate("Laibaray");
@@ -63,6 +86,7 @@ const HomeScreen = () => {
 
   const [greeting, setGreeting] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleInternet, setModalVisibleInternet] = useState(false);
   const [fontsLoaded, fontError] = useFonts({
     "Merriweather-Bold": require("../assets/fonts/Merriweather-Bold.ttf"),
     "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
@@ -271,6 +295,7 @@ const HomeScreen = () => {
                 </View>
               </TouchableOpacity>
             </View>
+            {/* Modal for Development */}
             <Modal
               animationType="fade"
               transparent={true}
@@ -285,6 +310,27 @@ const HomeScreen = () => {
                   <TouchableOpacity
                     style={styles.closeButton}
                     onPress={() => setModalVisible(false)}
+                  >
+                    <Text style={styles.textStyle}>OK</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+            {/*// Modal for No Internet Connection*/}
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisibleInternet}
+              onRequestClose={() => setModalVisibleInternet(false)}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Image style={styles.modalImage} source={require('../assets/images/not-found.png')} />
+                  <Text style={styles.modalHeadText}>No Internet Connection</Text>
+                  <Text style={styles.modalText}>Please Check Your Internet Connection</Text>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalVisibleInternet(false)}
                   >
                     <Text style={styles.textStyle}>OK</Text>
                   </TouchableOpacity>
