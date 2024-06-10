@@ -15,6 +15,7 @@ import DiseaseDetailsScreen from "./Components/diseaseDetail";
 import ResultScreen from "./Components/treatment";
 import History from "./Components/history";
 import DiseaseDetailsHistoryScreen from "./Components/DiseaseDetails";
+import SplashScreen from "./Components/SplashScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -22,7 +23,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Navigator initialRouteName="Splash">
+        <Stack.Screen
+          name="Splash"  
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="HomeScreen"  
           component={HomeScreen}
