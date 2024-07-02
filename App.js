@@ -11,6 +11,7 @@ import Laibaray from "./Components/Laibaray"
 import Libraray from "./Components/Libraray"
 import NearMe from "./Components/NearMe"
 import OfflineClassifier from "./Components/Offline_Prediction";
+import OfflineClassifierV2 from "./Components/OfflinePredV2";
 import DiseaseDetailsScreen from "./Components/diseaseDetail";
 import ResultScreen from "./Components/treatment";
 import History from "./Components/history";
@@ -23,7 +24,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName="OfflineScreenV2">
         <Stack.Screen
           name="Splash"  
           component={SplashScreen}
@@ -37,6 +38,11 @@ export default function App() {
         <Stack.Screen
           name="OfflineScreen"
           component={OfflineClassifier}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="OfflineScreenV2"
+          component={OfflineClassifierV2}
           options={{ headerShown: false }}
         />
         <Stack.Screen

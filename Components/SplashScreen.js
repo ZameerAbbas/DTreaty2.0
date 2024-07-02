@@ -1,4 +1,3 @@
-// src/screens/SplashScreen.js
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
