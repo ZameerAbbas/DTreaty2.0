@@ -69,26 +69,33 @@
 // });
 
 // export default FramAreaCal;
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Button, Text, PermissionsAndroid, Platform } from 'react-native';
-import MapView, { Marker, Polygon, PROVIDER_GOOGLE } from 'react-native-maps';
-import Geolocation from 'react-native-geolocation-service';
-import * as geolib from 'geolib';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  PermissionsAndroid,
+  Platform,
+} from "react-native";
+import MapView, { Marker, Polygon, PROVIDER_GOOGLE } from "react-native-maps";
+import Geolocation from "react-native-geolocation-service";
+import * as geolib from "geolib";
 
 const FramAreaCal = () => {
   const [points, setPoints] = useState([]);
   const [area, setArea] = useState(0);
   const [initialRegion, setInitialRegion] = useState(null);
-  const [mapType, setMapType] = useState('hybrid'); // Initialize with 'hybrid'
+  const [mapType, setMapType] = useState("hybrid"); // Initialize with 'hybrid'
 
   useEffect(() => {
     const requestLocationPermission = async () => {
-      if (Platform.OS === 'android') {
+      if (Platform.OS === "android") {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
         );
         if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          alert('Location permission denied');
+          alert("Location permission denied");
           setInitialRegion({
             latitude: 30.3753,
             longitude: 69.3451,
@@ -109,7 +116,7 @@ const FramAreaCal = () => {
         },
         (error) => {
           console.log(error);
-          alert('Error getting location, defaulting to Pakistan');
+          alert("Error getting location, defaulting to Pakistan");
           setInitialRegion({
             latitude: 30.3753,
             longitude: 69.3451,
@@ -130,7 +137,7 @@ const FramAreaCal = () => {
 
   const calculateArea = () => {
     if (points.length < 3) {
-      alert('At least 3 points are required to calculate an area');
+      alert("At least 3 points are required to calculate an area");
       return;
     }
     const calculatedArea = geolib.getAreaOfPolygon(points);
@@ -167,16 +174,41 @@ const FramAreaCal = () => {
         {points.length > 2 && <Polygon coordinates={points} />}
       </MapView>
       <View style={styles.buttonContainer}>
-        <Button title="Calculate Area" onPress={calculateArea} />
-        <Button title="Clear" onPress={clearArea} />
-        <Button title="Undo Last Point" onPress={undoLastPoint} />
+        <Button
+          title="Calculate Area"
+          onPress={calculateArea}
+          style={styles.btns}
+        />
+        <Button title="Clear" onPress={clearArea} style={styles.btns} />
+        <Button
+          title="Undo Last Point"
+          onPress={undoLastPoint}
+          style={styles.btns}
+        />
         {area > 0 && <Text>Area: {area} m²</Text>}
       </View>
       <View style={styles.mapTypeButtonContainer}>
-        <Button title="Standard" onPress={() => setMapType('standard')} />
-        <Button title="Terrain" onPress={() => setMapType('terrain')} />
-        <Button title="Satellite" onPress={() => setMapType('satellite')} />
-        <Button title="Hybrid" onPress={() => setMapType('hybrid')} />
+        <Button
+          title="Standard"
+          onPress={() => setMapType("standard")}
+          style={styles.btns}
+        />
+        <Button
+          title="Terrain"
+          onPress={() => setMapType("terrain")}
+          style={styles.btns}
+        />
+        <Button
+          title="Satellite"
+          onPress={() => setMapType("satellite")}
+          style={styles.btns}
+        />
+        <Button
+          title="Hybrid"
+          onPress={() => setMapType("hybrid")}
+          
+          classNAme="bg-red-900"
+        />
       </View>
     </View>
   );
@@ -185,33 +217,37 @@ const FramAreaCal = () => {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   map: {
     ...StyleSheet.absoluteFillObject,
   },
   buttonContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 100,
-    left: '10%',
-    right: '10%',
-    backgroundColor: 'white',
+    left: "10%",
+    right: "10%",
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 10,
-    flexDirection: 'column',  // Changed to column to accommodate more buttons
-    justifyContent: 'space-between',
+    flexDirection: "column", // Changed to column to accommodate more buttons
+    justifyContent: "space-between",
   },
   mapTypeButtonContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 50,
-    left: '10%',
-    right: '10%',
-    backgroundColor: 'white',
+    left: "10%",
+    right: "10%",
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  btns: {
+    backgroundColor: "#4DB129",
+    margin: 10,
   },
 });
 
