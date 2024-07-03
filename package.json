@@ -31,12 +31,16 @@
     "expo-image-picker": "~14.3.2",
     "expo-media-library": "~15.4.1",
     "expo-permissions": "~14.2.1",
+    "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "install": "^0.13.0",
     "jpeg-js": "^0.4.4",
+    "leaflet": "^1.9.4",
+    "leaflet-draw": "^1.0.4",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-leaflet": "^4.2.1",
     "react-native": "0.72.10",
     "react-native-config": "^1.5.1",
     "react-native-elements": "^3.4.3",
@@ -55,8 +59,7 @@
     "react-native-webview": "13.2.2",
     "react-native-youtube-iframe": "^2.3.0",
     "translate": "^3.0.0",
-    "undefined": ".expo-dev-client",
-    "expo-splash-screen": "~0.20.5"
+    "undefined": ".expo-dev-client"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

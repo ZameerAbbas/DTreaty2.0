@@ -24,7 +24,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="OfflineScreenV2">
+      <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen
           name="Splash"  
           component={SplashScreen}
