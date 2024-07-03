@@ -33,6 +33,7 @@
     "expo-permissions": "~14.2.1",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
+    "geolib": "^3.3.4",
     "install": "^0.13.0",
     "jpeg-js": "^0.4.4",
     "leaflet": "^1.9.4",
