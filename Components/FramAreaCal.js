@@ -79,7 +79,7 @@ const FramAreaCal = () => {
   const [points, setPoints] = useState([]);
   const [area, setArea] = useState(0);
   const [initialRegion, setInitialRegion] = useState(null);
-  const [mapType, setMapType] = useState('standard');
+  const [mapType, setMapType] = useState('hybrid'); // Initialize with 'hybrid'
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -142,6 +142,12 @@ const FramAreaCal = () => {
     setArea(0);
   };
 
+  const undoLastPoint = () => {
+    if (points.length > 0) {
+      setPoints(points.slice(0, -1));
+    }
+  };
+
   // if (!initialRegion) {
   //   return <Text>Loading...</Text>;
   // }
@@ -163,6 +169,7 @@ const FramAreaCal = () => {
       <View style={styles.buttonContainer}>
         <Button title="Calculate Area" onPress={calculateArea} />
         <Button title="Clear" onPress={clearArea} />
+        <Button title="Undo Last Point" onPress={undoLastPoint} />
         {area > 0 && <Text>Area: {area} m²</Text>}
       </View>
       <View style={styles.mapTypeButtonContainer}>
@@ -192,7 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
-    flexDirection: 'row',
+    flexDirection: 'column',  // Changed to column to accommodate more buttons
     justifyContent: 'space-between',
   },
   mapTypeButtonContainer: {
