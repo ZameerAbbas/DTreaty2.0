@@ -20,10 +20,6 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
         }
-      ],
-      [
-        "@react-native-firebase/app",
-        "@react-native-firebase/auth"
       ]
     ],
     "ios": {
@@ -31,11 +27,19 @@
     },
     "android": {
       "permissions": [
-        "INTERNET"
-      ]
+        "INTERNET",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.musharraf.smartfields"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "958b3c97-25ea-4eeb-a6bc-1c282012c33a"
+      }
     }
   }
 }
