@@ -11,9 +11,6 @@ import {
   Image
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Button } from 'react-native-elements';
-import * as tf from "@tensorflow/tfjs";
-import { fetch } from "@tensorflow/tfjs-react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import NetInfo from '@react-native-community/netinfo';
 import { Ionicons } from "@expo/vector-icons";
