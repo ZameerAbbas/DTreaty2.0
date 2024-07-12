@@ -15,6 +15,7 @@
       "**/*"
     ],
     "plugins": [
+      ["@react-native-firebase/app", "@react-native-firebase/auth"],
       [
         "expo-camera",
         {
@@ -26,6 +27,7 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./android/app/google-services.json",
       "permissions": [
         "INTERNET",
         "android.permission.CAMERA",

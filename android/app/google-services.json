@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "870292720630",
+    "project_id": "smartfields-b9be4",
+    "storage_bucket": "smartfields-b9be4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870292720630:android:00ce3b200ebc146e0915d7",
+        "android_client_info": {
+          "package_name": "com.musharraf.smartfields"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiDeb4yAijpHCtag92dnzALGHSS6nU3D0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

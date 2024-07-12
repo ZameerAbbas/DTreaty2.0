@@ -17,17 +17,52 @@ import ResultScreen from "./Components/treatment";
 import History from "./Components/history";
 import DiseaseDetailsHistoryScreen from "./Components/DiseaseDetails";
 import SplashScreen from "./Components/SplashScreen";
-
+import Login from "./Components/login";
+import Details from "./Components/Details";
+import firebase from '@react-native-firebase/app';
+import { initializeApp } from "firebase/app";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBiGyvXF97HHjL_gHgvdzQSxUAjY7pfyyQ",
+    authDomain: "smartfields-b9be4.firebaseapp.com",
+    projectId: "smartfields-b9be4",
+    storageBucket: "smartfields-b9be4.appspot.com",
+    messagingSenderId: "870292720630",
+    appId: "1:870292720630:web:be3c49c3051af2570915d7"
+  };
+
+  const app = initializeApp(firebaseConfig);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName="login">
         <Stack.Screen
           name="Splash"  
           component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="login"  
+          component={Login}
+          options={{
+            headerShown: true,
+            title: 'Login',
+            headerStyle: {
+              backgroundColor: '#4DB129', // Background color
+            },
+            headerTintColor: '#fff', // Text color
+            headerTitleStyle: {
+              fontWeight: 'bold', // Title text style
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Details"  
+          component={Details}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -23,11 +23,25 @@ import Footer from "./Footer";
 import { useFonts } from "expo-font";
 import YoutubeSlider from "./youtube";
 import Item from "./commonDisease";
+import auth from '@react-native-firebase/auth';
 
 
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
+  const handleLogout = async () =>{
+    try {
+      await auth.signOut();
+
+      navigation.reset({
+        index:0,
+        routes:[{ name: "login"}]
+      })
+    } catch (error) {
+      console.log("Error while signing out: ", error)
+    }
+  }
 
   const navigateToClassificationScreen = () => {
     NetInfo.fetch().then(state => {
@@ -172,6 +186,11 @@ const HomeScreen = () => {
           <View style={styles.cartbox}>
             <View style={styles.cartnotif}>
               <TouchableOpacity onPress={navigatetoHistory}>
+                <MaterialCommunityIcons name="history" size={27} color="#fff" />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.cartnotif}>
+              <TouchableOpacity onPress={handleLogout}>
                 <MaterialCommunityIcons name="history" size={27} color="#fff" />
               </TouchableOpacity>
             </View>
